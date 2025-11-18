@@ -1,0 +1,487 @@
+{% extends 'base1.html' %}
+{% load static %}
+{% block content %}
+<style>
+    .v_image {
+        width: 100%;
+        height: 100%;
+        border: 1px solid black;
+    }
+
+    .i {
+        width: 33%;
+        background: white;
+    }
+
+    .b {
+        border: 1px solid black;
+        width: 100%;
+        padding: 10px;
+        background-color: #f7f7f7;
+    }
+
+    .bb {
+        display: flex;
+        width: 100%;
+        background-color: #f7f7f7;
+        flex-wrap: wrap;
+    }
+
+    .a {
+        display: flex;
+    }
+
+    .v {
+        width: 67%;
+    }
+
+    .p {
+        background-color: white;
+        padding-left: 10px;
+        font-size: 20px;
+        width: 31%;
+        border: 1px solid black;
+        margin-bottom: 0px;
+        border-left: none;
+        border-bottom: none;
+        padding-top: 9px;
+    }
+
+    .s {
+        background-color: white;
+        text-align: center;
+        font-size: 30px;
+        border: 1px solid black;
+        width: 20px;
+        border-left: none;
+        border-bottom: none;
+    }
+
+    .ip {
+        background-color: white;
+        padding-left: 10px;
+        font-size: 14px;
+        width: 65%;
+        border: 1px solid black;
+        margin-bottom: 0px;
+        border-left: none;
+        border-bottom: none;
+        padding-top: 16px;
+    }
+
+    .ro {
+        margin: 0;
+        margin-top: 10px;
+        border: 1px solid black;
+    }
+
+    .card {
+        margin: 0;
+    }
+
+    .imgg {
+        width: 100%;
+        height: 680px;
+    }
+
+    .bbbb {
+        border: 1px solid #18aefa;
+        background: white;
+        color: #18aefa;
+        border-radius: 6px;
+        padding: 3px;
+    }
+
+    @media only screen and (max-width: 960px) {
+        .bb {
+            display: block;
+        }
+
+        .i {
+            width: 100%;
+            height: 215px;
+        }
+
+        .p {
+            background-color: white;
+            padding-left: 4px;
+            font-size: 10px;
+            margin-bottom: 0px;
+            padding-top: 9px;
+            border-left: 1px solid;
+        }
+
+        .s {
+            background-color: white;
+            text-align: center;
+            font-size: 20px;
+            width: 18px;
+        }
+
+        .ip {
+            background-color: white;
+            padding-left: 10px;
+            font-size: 12px;
+            width: 65%;
+            margin-bottom: 0px;
+            padding-top: 8px;
+        }
+
+        .v {
+            width: 100%;
+        }
+
+        .bbbb {
+            font-size: 9px;
+        }
+    }
+</style>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="col-12">
+                    <h5 class="form-title"><span>Vehicle Details </span></h5>
+                    {% include 'includes/messages.html' %}
+                </div>
+                <div class="b">
+                    <div class="bb">
+                        <div class="i">
+                            <img src="{% static '/assets/img/carr.png' %}" alt="img" style="height: 277px;" class="v_image" />
+                        </div>
+                        <div class="v">
+                            <div class="a">
+                                <p class="p">Registration No</p>
+                                <span class="s">:</span>
+                                <p class="ip">{{v.registration_no}}</p>
+                            </div>
+                            <div class="a">
+                                <p class="p">RC Image</p>
+                                <span class="s">:</span>
+                                <p class="ip">
+                                    <button class="bbbb" type="button" data-toggle="modal"
+                                        data-target="#ImageModal{{ v.id }}" class="btn btn-outline-info mr-2">
+                                        <i class="fas fa-car"></i> Image
+                                    </button>
+                                </p>
+                            </div>
+                            <div class="a">
+                                <p class="p">Owner Name</p>
+                                <span class="s">:</span>
+                                <p class="ip">{{v.Owner}} </p>
+                            </div>
+                            <div class="a">
+                                <p class="p">Insurance</p>
+                                <span class="s">:</span>
+                                <p class="ip">
+                                    {{v.insu_start}} - {{v.insu_end}}
+                                    &nbsp;&nbsp;&nbsp;&nbsp;<button class="bbbb" type="button" data-toggle="modal"
+                                        data-target="#bImageModal{{ v.id }}" class="btn btn-outline-info mr-2">
+                                        <i class="fas fa-car"></i> Image
+                                    </button>
+                                    <button class="bbbb" type="button" data-toggle="modal"
+                                        data-target="#bEditModal{{ v.id }}" class="btn btn-sm bg-success-light mr-2">
+                                        <i class="fas fa-pen"></i>
+                                    </button>
+                                </p>
+                            </div>
+                            <div class="a">
+                                <p class="p">Pollution</p>
+                                <span class="s">:</span>
+                                <p class="ip">
+                                    {{v.pop_start}} - {{v.pop_end}}
+                                    &nbsp;&nbsp;&nbsp;&nbsp;<button class="bbbb" type="button" data-toggle="modal"
+                                        data-target="#cImageModal{{ v.id }}" class="btn btn-outline-info mr-2">
+                                        <i class="fas fa-car"></i> Image
+                                    </button>
+                                    <button class="bbbb" type="button" data-toggle="modal"
+                                        data-target="#cEditModal{{ v.id }}" class="btn btn-sm bg-success-light mr-2">
+                                        <i class="fas fa-pen"></i>
+                                    </button>
+                                </p>
+                            </div>
+                            <div class="a">
+                                <p class="p" style="border-bottom: 1px solid black">
+                                    Fitness
+                                </p>
+                                <span class="s" style="border-bottom: 1px solid black">:</span>
+                                <p class="ip" style="border-bottom: 1px solid;">
+                                    {{v.fit_start}} - {{v.fit_end}}
+                                    &nbsp;&nbsp;&nbsp;&nbsp;<button class="bbbb" type="button" data-toggle="modal"
+                                        data-target="#FImageModal{{ v.id }}" class="btn btn-outline-info mr-2">
+                                        <i class="fas fa-car"></i> Image
+                                    </button>
+                                    <button class="bbbb" type="button" data-toggle="modal"
+                                        data-target="#FEditModal{{ v.id }}" class="btn btn-sm bg-success-light mr-2">
+                                        <i class="fas fa-pen"></i>
+                                    </button>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row ro">
+                        <div class="col-sm-12">
+                            <div class="card card-table">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="table_id" class="table table-hover table-center mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID.</th>
+                                                    <th>Date</th>
+                                                    <th>Category</th>
+                                                    <th>Work</th>
+                                                    <th>Vendor</th>
+                                                    <th>Price</th>
+                                                    <th class="text-right">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for V in vv %}
+                                                <tr>
+                                                    <td>{{V.id}}</td>
+                                                    <td>{{V.date}}</td>
+                                                    <td>{{V.category}}</td>
+                                                    <td>{{V.work}}</td>
+
+                                                    <td>{{V.vendor}}</td>
+                                                    <td>{{V.amount}}</td>
+                                                    <td class="text-right">
+                                                        <div class="actions">
+                                                            <button type="button" data-toggle="modal"
+                                                                data-target="#mModal{{ V.id }}"
+                                                                class="btn btn-outline-info mr-2">
+                                                                <i class="fas fa-car"></i> Image
+                                                            </button>
+                                                            <button type="button" data-toggle="modal"
+                                                                data-target="#EditModal{{ s.id }}"
+                                                                class="btn btn-sm bg-success-light mr-2">
+                                                                <i class="fas fa-pen"></i>
+                                                            </button>
+                                                            <button type="button" data-toggle="modal"
+                                                                data-target="#deleteModal{{ s.id }}"
+                                                                class="btn btn-sm bg-danger-light">
+                                                                <i class="fas fa-trash"></i>
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ImageModal{{ v.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">RC Image</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <img class="imgg" src="/{{ v.rc }}" alt="image" />
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="bImageModal{{ v.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Insurance Image</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <img class="imgg" src="/{{ v.insu_image }}" alt="image" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="bEditModal{{ v.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Edit Insurance</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'updateI' %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="col-12 col-sm-12">
+                        <div class="form-group">
+                            <label>New Insurance Image: </label>
+                            <input type="file" class="form-control" name="insu_image" accept="image/*" required>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-12">
+                        <div class="form-group">
+                            <label>Insurance Start Date : </label>
+                            <input type="date" class="form-control" name="IS" required>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-12">
+                        <div class="form-group">
+                            <label>Insurance End Date : </label>
+                            <input type="date" class="form-control" name="IE" required>
+                            <input type="text" class="form-control" name="VI" hidden value="{{v.id}}">
+                        </div>
+                    </div>
+                    <div class="col-12" style="margin-bottom: 30px;">
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="cEditModal{{ v.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Edit Pollution </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'updatePP' %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="col-12 col-sm-12">
+                        <div class="form-group">
+                            <label>New Pollution Image: </label>
+                            <input type="file" class="form-control" name="pop_image" accept="image/*" required>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-12">
+                        <div class="form-group">
+                            <label>Pollution Start Date : </label>
+                            <input type="date" class="form-control" name="PS" required>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-12">
+                        <div class="form-group">
+                            <label>Pollution End Date : </label>
+                            <input type="date" class="form-control" name="PE" required>
+                            <input type="text" class="form-control" name="VI" hidden value="{{v.id}}">
+                        </div>
+                    </div>
+                    <div class="col-12" style="margin-bottom: 30px;">
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="cImageModal{{ v.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Pollution Image</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <img class="imgg" src="/{{ v.pop_image }}" alt="image" />
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="FImageModal{{ v.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Fitness Image</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <img class="imgg" src="/{{ v.fit_image }}" alt="image" />
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="FEditModal{{ v.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Edit Fitness </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'updateF' %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="col-12 col-sm-12">
+                        <div class="form-group">
+                            <label>New Fitness Image: </label>
+                            <input type="file" class="form-control" name="fit_image" accept="image/*" required>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-12">
+                        <div class="form-group">
+                            <label>Fit Start Date : </label>
+                            <input type="date" class="form-control" name="FS" required>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-12">
+                        <div class="form-group">
+                            <label>Fit End Date : </label>
+                            <input type="date" class="form-control" name="FE" required>
+                            <input type="text" class="form-control" name="VI" hidden value="{{v.id}}">
+                        </div>
+                    </div>
+                    <div class="col-12" style="margin-bottom: 30px;">
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% for V in vv %}
+<div class="modal fade" id="mModal{{ V.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Image</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <img class="imgg" src="/{{ V.image }}" alt="image" />
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %} {% endblock %}

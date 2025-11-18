@@ -1,0 +1,217 @@
+{% extends 'base1.html' %}
+{% block content %}
+<style>
+    .search-input .autocom-box {
+        padding: 0;
+        opacity: 0;
+        pointer-events: none;
+        max-height: 280px;
+        overflow-y: auto;
+    }
+
+    .search-input.active .autocom-box {
+        padding: 10px 8px;
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .autocom-box li {
+        list-style: none;
+        padding: 8px 12px;
+        display: none;
+        width: 100%;
+        cursor: pointer;
+        border-radius: 3px;
+    }
+
+    .search-input.active .autocom-box li {
+        display: block;
+    }
+
+    .autocom-box li:hover {
+        background: #efefef;
+    }
+</style>
+<div class="content container-fluid">
+    <div class="page-header">
+        <div class="row align-items-center">
+            <div class="col">
+                <h3 class="page-title">View Billing</h3>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                    <li class="breadcrumb-item active">View</li>
+                </ul>
+            </div>
+            <div class="col-auto text-right float-right ml-auto">
+                <button class="btn btn-outline-primary mr-2" id="export-btn">
+                    <i class="fas fa-download"></i> Download
+                </button>
+            </div>
+        </div>
+    </div>
+    {% include 'includes/messages.html' %}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <form action="#" method="GET">
+                        {% csrf_token %}
+                        <div class="col-12">
+                            <h5 class="form-title"><span>Apply Filters</span></h5>
+                        </div>
+                        <div style="display: flex; flex-wrap: wrap;">
+                            <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                    <label>Invoice Number:</label>
+                                    <input type="text" class="form-control" name="I_O">
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <div class="form-group search-input">
+                                    <label>Customer Name:</label>
+                                    <input type="text" class="form-control" name="c_n" id="customerName">
+                                    <div class="autocom-box" style=" border: 1px solid; border-radius: 12px;">
+                                        <!-- Suggestions will be dynamically inserted here -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                    <label>From:</label>
+                                    <input type="date" class="form-control" name="fr">
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                    <label>To:</label>
+                                    <input type="date" class="form-control" name="to">
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                    <label>Amount:</label>
+                                    <input type="number" class="form-control" name="amt">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card card-table">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="table_id" class="table table-hover table-center mb-0 ">
+                            <thead>
+                                <tr>
+                                    <th>Invoice No</th>
+                                    <th>Date</th>
+                                    <th>Customer Name</th>
+                                    <th>Amount</th>
+                                    <th class="text-right">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for s in SS %}
+                                <tr>
+                                    <td>
+                                        <h2 class="table-avatar">{{ s.invoice_no }}</h2>
+                                    </td>
+                                    <td>{{ s.date }}</td>
+                                    <td>{{ s.c_n }}</td>
+                                    <td>{{ s.g_t }}</td>
+                                    <td class="text-right">
+                                        
+                                        <div class="actions">
+                                            {% if s.type == '1' %}
+                                            <a href="{% url 'view_details_bill' s.id %}" 
+                                                class="btn btn-sm bg-success-light mr-2">
+                                                <i class="fas fa-i"></i> View Billing
+                                            </a>
+                                            {% else %}
+                                            <a href="{% url 'view_details_billl' s.id %}" 
+                                                class="btn btn-sm bg-success-light mr-2">
+                                                <i class="fas fa-i"></i> View Billing
+                                            </a>
+                                            {% endif %}
+                                            <button type="button" data-toggle="modal" data-target="#deleteModal{{ s.id }}" class="btn btn-sm bg-danger-light">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    const inputBox = document.querySelector("#customerName");
+    const suggBox = document.querySelector(".autocom-box");
+    const searchWrapper = document.querySelector(".search-input");
+
+    // URL for the customer suggestions endpoint
+    const suggestionUrl = "{% url 'customer_suggestions' %}";
+
+    inputBox.addEventListener("keyup", (e) => {
+        const userData = e.target.value.trim();
+        if (userData) {
+            fetch(`${suggestionUrl}?q=${userData}`)
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.length) {
+                        let listData = data.map((item) => `<li>${item}</li>`).join("");
+                        suggBox.innerHTML = listData;
+                        searchWrapper.classList.add("active");
+
+                        // Add click events to each suggestion
+                        suggBox.querySelectorAll("li").forEach((item) => {
+                            item.addEventListener("click", () => {
+                                inputBox.value = item.textContent;
+                                searchWrapper.classList.remove("active");
+                            });
+                        });
+                    } else {
+                        suggBox.innerHTML = `<li>No results found</li>`;
+                        searchWrapper.classList.add("active");
+                    }
+                })
+                .catch((error) => console.error("Error fetching suggestions:", error));
+        } else {
+            searchWrapper.classList.remove("active");
+        }
+    });
+</script>
+{% for s in SS %}
+<div class="modal fade" id="deleteModal{{ s.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Confirm to delete the bill
+        </div>
+        <div class="modal-footer">
+            <a href="{% url 'delete_bill' s.id %}"  class="btn btn-sm bg-danger-light no-print">
+                <i class="fas fa-trash"> Delete</i>
+            </a>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endfor %}
+{% endblock %}

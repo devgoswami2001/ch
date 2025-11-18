@@ -1,0 +1,240 @@
+{% extends 'base1.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+   .d-flex {
+      padding-right: 5px;
+   }
+
+   .db-icon {
+      font-size: 25px;
+      width: 60px;
+      height: 60px;
+      padding: 12px 15px;
+      border-radius: 10px;
+      color: #fff;
+   }
+
+   .db-info {
+      text-align: end;
+   }
+
+   /* .bg-one { background-color: #4CAF50; }
+   .bg-two { background-color: #2196F3; }
+   .bg-three { background-color: #FF9800; }
+   .bg-four { background-color: #F44336; } */
+   table {
+      border-collapse: collapse;
+      width: 100%;
+   }
+
+   table, th, td {
+      border: 1px solid black;
+   }
+
+   th, td {
+      padding: 10px;
+      text-align: left;
+   }
+</style>
+
+<div class="page-header">
+   <div class="row">
+      <div class="col-sm-12">
+         <h3 class="page-title">Welcome Admin!</h3>
+         <ul class="breadcrumb">
+            <li class="breadcrumb-item active">Dashboard</li>
+         </ul>
+      </div>
+   </div>
+</div>
+
+<div class="row">
+   <div class="col-xl-3 col-sm-6 col-12 d-flex">
+      <div class="card bg-one w-100">
+         <div class="card-body">
+            <div class="db-widgets d-flex justify-content-between align-items-center">
+               <div class="db-icon">
+                  <i class="fas fa-map"></i>
+               </div>
+               <div class="db-info">
+                  <h3>{{total_trips}}</h3>
+                  <h6>Trips In Month</h6>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="col-xl-3 col-sm-6 col-12 d-flex">
+      <div class="card bg-two w-100">
+         <div class="card-body">
+            <div class="db-widgets d-flex justify-content-between align-items-center">
+               <div class="db-icon">
+                  <i class="fas fa-book"></i>
+               </div>
+               <div class="db-info">
+                  <h3>{{t}} KM</h3>
+                  <h6>Running In Month</h6>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="col-xl-3 col-sm-6 col-12 d-flex">
+      <div class="card bg-three w-100">
+         <div class="card-body">
+            <div class="db-widgets d-flex justify-content-between align-items-center">
+               <div class="db-icon">
+                  <i class="fas fa-money-bill"></i>
+               </div>
+               <div class="db-info">
+                  <h3>₹ {{total_bill}}</h3>
+                  <h6>Total Billing</h6>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="col-xl-3 col-sm-6 col-12 d-flex">
+      <div class="card bg-four w-100">
+         <div class="card-body">
+            <div class="db-widgets d-flex justify-content-between align-items-center">
+               <div class="db-icon">
+                  <i class="fas fa-gas-pump"></i>
+               </div>
+               <div class="db-info">
+                  <h3>{{total_fuel}}L - ₹{{total_fuel_C}}</h3>
+                  <h6>Total Fuel Consumed</h6>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+<div class="content container-fluid">
+   <!-- Monthly Report -->
+   <div class="page-header">
+      <div class="row align-items-center">
+         <div class="col">
+            <h3 class="page-title">Monthly Report</h3>
+         </div>
+         <div class="col-auto text-right float-right ml-auto">
+            <button class="btn btn-outline-primary mr-2" id="download-monthly">
+               <i class="fas fa-download"></i> Download Monthly Report
+            </button>
+         </div>
+      </div>
+   </div>
+   <div class="row">
+      <div class="col-sm-12">
+         <div class="card card-table">
+            <div class="card-body">
+               <div class="table-responsive">
+                  <table id="monthly_report" class="table table-hover table-center mb-0">
+                     <thead>
+                        <tr>
+                           <th>S.No</th>
+                           <th>Car Number</th>
+                           <th>Trips</th>
+                           <th>Running (km)</th>
+                           <th>Total Amount</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        {% for s in monthly_data %}
+                        <tr>
+                           <td>{{ s.id }}</td>
+                           <td>{{ s.v }}</td>
+                           <td>{{ s.trips }}</td>
+                           <td>{{ s.running|floatformat:2 }}</td>
+                           <td>₹ {{ s.amount|floatformat:2 }}</td>
+                        </tr>
+                        {% endfor %}
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+<div class="content container-fluid">
+   <!-- All-Time Report -->
+   <div class="page-header">
+      <div class="row align-items-center">
+         <div class="col">
+            <h3 class="page-title">All-Time Report</h3>
+         </div>
+         <div class="col-auto text-right float-right ml-auto">
+            <button class="btn btn-outline-primary mr-2" id="download-all">
+               <i class="fas fa-download"></i> Download All-Time Report
+            </button>
+         </div>
+      </div>
+   </div>
+   <div class="row">
+      <div class="col-sm-12">
+         <div class="card card-table">
+            <div class="card-body">
+               <div class="table-responsive">
+                  <table id="all_report" class="table table-hover table-center mb-0">
+                     <thead>
+                        <tr>
+                           <th>S.No</th>
+                           <th>Car Number</th>
+                           <th>Trips</th>
+                           <th>Running (km)</th>
+                           <th>Total Amount</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        {% for s in all_data %}
+                        <tr>
+                           <td>{{ s.id }}</td>
+                           <td>{{ s.v }}</td>
+                           <td>{{ s.trips }}</td>
+                           <td>{{ s.running|floatformat:2 }}</td>
+                           <td>₹ {{ s.amount|floatformat:2 }}</td>
+                        </tr>
+                        {% endfor %}
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+<script>
+   function exportTableToExcel(tableID, filename = '') {
+      const table = document.getElementById(tableID);
+      const rows = Array.from(table.rows);
+      const csv = rows.map(row => {
+         const cells = Array.from(row.cells);
+         return cells.map(cell => '"' + cell.innerText + '"').join(',');
+      }).join('\n');
+
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.style.display = 'none';
+      a.href = url;
+      a.download = filename || `${tableID}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+   }
+
+   document.getElementById('download-monthly').addEventListener('click', () => {
+      exportTableToExcel('monthly_report', 'Monthly_Report.csv');
+   });
+
+   document.getElementById('download-all').addEventListener('click', () => {
+      exportTableToExcel('all_report', 'All_Time_Report.csv');
+   });
+</script>
+{% endblock %}

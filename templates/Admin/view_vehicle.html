@@ -1,0 +1,121 @@
+{% extends 'base1.html' %}
+{% block content %}
+<div class="content container-fluid">
+    <div class="page-header">
+        <div class="row align-items-center">
+            <div class="col">
+                <h3 class="page-title">View Vehicle</h3>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                    <li class="breadcrumb-item active">View</li>
+                </ul>
+            </div>
+            <div class="col-auto text-right float-right ml-auto">
+                <button class="btn btn-outline-primary mr-2" id="export-btn">
+                    <i class="fas fa-download"></i> Download
+                </button>
+            </div>
+        </div>
+    </div>
+    {% include 'includes/messages.html' %}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <form action="{% url 'view_vehicle' %}" method="GET">
+                        {% csrf_token %}
+                        <div class="col-12">
+                            <h5 class="form-title"><span>Apply Filters</span></h5>
+                        </div>
+                        <div style="display: flex;
+                        flex-wrap: wrap;">
+                            <div class="col-12 col-sm-6">
+                                <div class="form-group">
+                                    <label>Select Vehicle :</label>
+                                    <select name="id" class="form-control">
+                                        <option value="">All</option>
+                                        {% for v in V %}
+                                        <option value="{{ v.id }}">{{ v.registration_no }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card card-table">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="table_id" class="table table-hover table-center mb-0 ">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Owner</th>
+                                    <th>Number</th>
+                                    <th class="text-right">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for s in SS %}
+                                <tr>
+                                    <td>
+                                        <h2 class="table-avatar">{{s.id}}</h2>
+                                    </td>
+                                    <td>{{s.owner}}</td>
+                                    <td>{{s.registration_no}}</td>
+                                    <td class="text-right">
+                                        <div class="actions">
+                                            <a href="{% url 'view_details_vechile' s.id %}" class="btn btn-outline-info mr-2" >
+                                                <i class="fas fa-info-circle"></i> Details
+                                            </a>
+                                            <button type="button" data-toggle="modal" data-target="#EditModal{{ s.id }}"
+                                                class="btn btn-sm bg-success-light mr-2">
+                                                <i class="fas fa-pen"></i>
+                                            </button>
+                                            <button type="button" data-toggle="modal"
+                                                data-target="#deleteModal{{ s.id }}" class="btn btn-sm bg-danger-light">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% for s in SS %}
+<div class="modal fade" id="deleteModal{{ s.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Delete Vehicle</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete the vehicle
+      </div>
+      <div class="modal-footer">
+        <a href="{% url 'delete_vehicle' s.id %}"  class="btn btn-sm bg-danger-light no-print">
+                <i class="fas fa-trash"> Delete</i>
+            </a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+{% endblock %}

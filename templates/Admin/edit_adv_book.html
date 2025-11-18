@@ -1,0 +1,135 @@
+{% extends 'base1.html' %}
+{% block content %}
+<div class="content container-fluid">
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="row align-items-center">
+            <div class="col">
+                <h3 class="page-title">View Advance Booking</h3>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Advance Booking</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    {% include 'includes/messages.html' %}
+
+    <!-- Edit Form -->
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <form method="POST" action="{% url 'edit_adv_booking' %}">
+                        {% csrf_token %}
+                        <div class="row">
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Customer Name</label>
+                                    <input type="text" name="cust" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Date</label>
+                                    <input type="date" name="date" class="form-control">
+                                </div>
+                           </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Mobile Number</label>
+                                    <input type="text" name="number" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="col-12 mt-3">
+                                <button type="submit" class="btn btn-primary">Search</button>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Booking Table -->
+    <div class="row mt-4">
+        <div class="col-sm-12">
+            <div class="card card-table">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-center mb-0">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Customer</th>
+                                    <th>From</th>
+                                    <th>To</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Mobile</th>
+                                    <th class="text-right">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for b in bookings %}
+                                <tr>
+                                    <td>{{ b.id }}</td>
+                                    <td>{{ b.cust }}</td>
+                                    <td>{{ b.fr }}</td>
+                                    <td>{{ b.to }}</td>
+                                    <td>{{ b.Date }}</td>
+                                    <td>{{ b.time }}</td>
+                                    <td>{{ b.number }}</td>
+                                    <td class="text-right">
+                                        <div class="action">
+                                            <button type="button" data-toggle="modal" data-target="#deleteModal{{ b.id }}" class="btn btn-sm bg-danger-light">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                {% if bookings|length == 0 %}
+                                <tr>
+                                    <td colspan="8" class="text-center">No bookings found.</td>
+                                </tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Modals -->
+    {% for b in bookings %}
+    <div class="modal fade" id="deleteModal{{ b.id }}" tabindex="-1" role="dialog" aria-labelledby="deleteLabel{{ b.id }}" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Delete Booking</h5>
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete booking for <strong>{{ b.cust }}</strong>?
+                </div>
+                <div class="modal-footer">
+                    <a href="{% url 'delete_adv_booking' b.id %}" class="btn btn-sm bg-danger-light">
+                        <i class="fas fa-trash"> Delete</i>
+                    </a>
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+</div>
+{% endblock %}

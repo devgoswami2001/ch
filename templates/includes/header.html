@@ -1,0 +1,263 @@
+{% load static %}
+<style>
+    .heading-main {
+        display: flex;
+        align-items: center;
+        padding-top: 13px;
+        color: #f68813;
+        font-size: 24px;
+    }
+
+    .logo-iimg {
+        max-width: 52%;
+    }
+
+    .lloog {
+        display: flex;
+        align-items: center;
+    }
+
+    @media (max-width: 964px) {
+        .logo img {
+            width: 222px;
+            height: 76px;
+        }
+
+        .heading-main {
+            font-size: 20px;
+        }
+    }
+
+    @media (min-width: 965px) and (max-width: 1193px) {
+        .logo-iimg {
+            max-width: 49%;
+        }
+    }
+
+    .menu-item {
+        border-bottom: 1px solid #e5e5e5;
+    }
+</style>
+{% if user.user_type == '2' %}
+<!-- Page Preloder -->
+<div id="preloder">
+    <div class="loader"></div>
+</div>
+
+<!-- Offcanvas Menu Section Begin -->
+<div class="offcanvas-menu-overlay"></div>
+<div class="canvas-open">
+    <i class="icon_menu"></i>
+</div>
+<div class="offcanvas-menu-wrapper">
+    <div class="canvas-close">
+        <i class="icon_close"></i>
+    </div>
+    <div class="header-configure-area">
+        <div class="language-option">
+            <img src="{% static '/img/gg.jpg' %}" alt="">
+            <span>BHARAT</i>
+        </div>
+        <a href="#" class="bk-btn">Booking Now</a>
+    </div>
+    <nav class="mainmenu mobile-menu">
+        <ul>
+            <li class="active"><a href="">Home</a></li>
+            <li><a href="#">Rooms</a>
+                <ul class="dropdown">
+                    <li><a href="">Non AC Room</a></li>
+                    <li><a href="">Deluxe Room</a></li>
+                    <li><a href="">Premium Room</a></li>
+                </ul>
+            </li>
+            <li><a href="">Hotels</a></li>
+            <li><a href="">About Us</a></li>
+            <li><a href="">Logout</a></li>
+        </ul>
+    </nav>
+    <div id="mobile-menu-wrap"></div>
+    <div class="top-social">
+        <a href="#"><i class="fa fa-facebook"></i></a>
+        <a href="#"><i class="fa fa-twitter"></i></a>
+        <a href="#"><i class="fa fa-instagram"></i></a>
+    </div>
+    <ul class="top-widget">
+        <li><i class="fa fa-phone"></i> (+91) 9891671848</li>
+        <li><i class="fa fa-envelope"></i> contact@chaudharytoursandtravels.in</li>
+    </ul>
+</div>
+<!-- Offcanvas Menu Section End -->
+
+<!-- Header Section Begin -->
+<header class="header-section">
+    <div class="top-nav">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <ul class="tn-left">
+                        <li><i class="fa fa-phone"></i> (+91) 9891671848</li>
+                        <li ><i class="fa fa-envelope"></i> contact@chaudharytoursandtravels.in</li>
+                    </ul>
+                </div>
+                <div class="col-lg-6">
+                    <div class="tn-right">
+                        <div class="top-social">
+                            <a href="#"><i class="fa fa-facebook"></i></a>
+                            <a href="#"><i class="fa fa-twitter"></i></a>
+                            <a href="#"><i class="fa fa-instagram"></i></a>
+                        </div>
+                        <a href="#" class="bk-btn">Booking Now</a>
+                        <div class="language-option">
+                            <img src="{% static '/img/gg.jpg' %}" alt="">
+                            <span>BHARAT </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="menu-item">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3" style="display: flex;
+                align-items: center;">
+                    <div class="logo lloog" style="margin: 3px;
+                    padding: 0px;">
+                        <a style="display: flex;
+                        align-items: center;" href="./index.html">
+                            <img class="logo-iimg" src="{% static '/img/logo.png' %}" alt="">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-9">
+                    <div class="nav-menu">
+                        <nav class="mainmenu">
+                            <ul>
+                                <li class="active"><a href="">Home</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Header End -->
+{% else %}
+<div id="preloder">
+    <div class="loader"></div>
+</div>
+
+<!-- Offcanvas Menu Section Begin -->
+<div class="offcanvas-menu-overlay"></div>
+<div class="canvas-open">
+    <i class="icon_menu"></i>
+</div>
+<div class="offcanvas-menu-wrapper">
+    <div class="canvas-close">
+        <i class="icon_close"></i>
+    </div>
+    <div class="header-configure-area">
+        <div class="language-option">
+            <img src="{% static '/img/gg.jpg' %}" alt="">
+            <span>BHARAT</span>
+        </div>
+        <a href="#" class="bk-btn">Booking Now</a>
+    </div>
+    <nav class="mainmenu mobile-menu">
+        <ul>
+            <li class="active"><a href="">Home</a></li>
+            <li><a href="#">Book Your Cab</a>
+                <ul class="dropdown">
+                    <li><a href="">One Way</a></li>
+                    <li><a href="">Return Trip</a></li>
+                    <li><a href="">Multiple Trips</a></li>
+                </ul>
+            </li>
+            <li><a href="">Long Trip</a></li>
+            <li><a href="">About Us</a></li>
+            <li><a href="">Sign Up</a></li>
+            <li><a href="">Login</a></li>
+        </ul>
+    </nav>
+    <div id="mobile-menu-wrap"></div>
+    <div class="top-social">
+        <a href="#"><i class="fa fa-facebook"></i></a>
+        <a href="#"><i class="fa fa-twitter"></i></a>
+        <a href="#"><i class="fa fa-instagram"></i></a>
+    </div>
+    <ul class="top-widget">
+        <li><i class="fa fa-phone"></i> (+91) 9891671848</li>
+        <li style="font-size: 13px;"><i class="fa fa-envelope"></i> contact@chaudharytoursandtravels.in</li>
+    </ul>
+</div>
+<!-- Offcanvas Menu Section End -->
+
+<!-- Header Section Begin -->
+<header class="header-section">
+    <div class="top-nav">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <ul class="tn-left">
+                        <li><i class="fa fa-phone"></i> (+91) 9891671848</li>
+                        <li><i class="fa fa-envelope"></i> contact@chaudharytoursandtravels.in</li>
+                    </ul>
+                </div>
+                <div class="col-lg-6">
+                    <div class="tn-right">
+                        <div class="top-social">
+                            <a href="#"><i class="fa fa-facebook"></i></a>
+                            <a href="#"><i class="fa fa-twitter"></i></a>
+                            <a href="#"><i class="fa fa-instagram"></i></a>
+                        </div>
+                        <a href="#" class="bk-btn">Booking Now</a>
+                        <div class="language-option">
+                            <img src="{% static '/img/gg.jpg' %}" alt="">
+                            <span>BHARAT</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="menu-item">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3" style="display: flex;
+                align-items: center;">
+                    <div class="logo lloog" style="margin: 3px;
+                    padding: 0px;">
+                        <a style="display: flex;
+                        align-items: center;" href="./index.html">
+                            <img class="logo-iimg" src="{% static '/img/logo.png' %}" alt="">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-9">
+                    <div class="nav-menu">
+                        <nav class="mainmenu">
+                            <ul>
+                                <li class="active"><a href="">Home</a></li>
+                                <li><a href="#">Book Your Cab</a>
+                                    <ul class="dropdown">
+                                        <li><a href="">One Way</a></li>
+                                        <li><a href="">Return Trip</a></li>
+                                        <li><a href="">Multiple Trips</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="">Long Trip</a></li>
+                                <li><a href="">About Us</a></li>
+                                
+                                <li><a href="">Sign Up</a></li>
+                                <li><a href="">Login</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Header End -->
+{% endif %}

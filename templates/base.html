@@ -1,0 +1,253 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chaudhary Tours And Travels</title>
+    <meta name="description"
+        content="Discover the best hotel booking deals and discounts at MeroVrindavan. Book now for unbeatable rates and enjoy a comfortable stay at our luxurious accommodations." />
+    <meta name="keywords"
+        content="MeroVrindavan, hotel booking vrindavan, hotel deals, discount hotels, online booking, hotel reservations, accommodation, travel, vacation, hospitality, luxury hotels, budget hotels" />
+   
+    <link rel="shortcut icon" href="{% static '/img/logo.png' %}" />
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Cabin:400,500,600,700&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="{% static '/css/bootstrap.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static '/css/font-awesome.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static '/css/elegant-icons.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static '/css/flaticon.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static '/css/owl.carousel.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static '/css/nice-select.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static '/css/jquery-ui.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static '/css/magnific-popup.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static '/css/slicknav.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static '/css/s1.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static '/css/oye3.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static '/css/oye1.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static '/css/s7.css' %} " type="text/css">
+</head>
+
+<body>
+    {% include 'includes/header.html' %}
+    {% block content %}
+
+    {% endblock %}
+    {% include 'includes/footer.html' %}
+    <!-- Js Plugins -->
+    <script src="{% static '/js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static '/js/bootstrap.min.js' %}"></script>
+    <script src="{% static '/js/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{% static '/js/jquery.nice-select.min.js' %}"></script>
+    <script src="{% static '/js/jquery-ui.min.js' %}"></script>
+    <script src="{% static '/js/jquery.slicknav.js' %}"></script>
+    <script src="{% static '/js/owl.carousel.min.js' %}"></script>
+    <script src="{% static '/js/main.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        // JavaScript code to handle room and guest count
+        const roomDecrementButton = document.getElementById("room-decrement");
+        const roomIncrementButton = document.getElementById("room-increment");
+        const guestDecrementButton = document.getElementById("decrement");
+        const guestIncrementButton = document.getElementById("increment");
+        const guestCount = document.getElementById("guest-count");
+        const roomCount = document.getElementById("room-count");
+        const guestInput = document.getElementById("guest");
+        const roomInput = document.getElementById("room");
+
+        // Initialize guest and room counts
+        let currentGuestCount = 1;
+        let currentRoomCount = 1;
+
+        // Function to update guest and room counts
+        function updateCounts() {
+            guestCount.textContent = currentGuestCount;
+            guestInput.value = currentGuestCount;
+            roomCount.textContent = currentRoomCount;
+            roomInput.value = currentRoomCount;
+        }
+
+        // Decrement room count
+        roomDecrementButton.addEventListener("click", () => {
+            if (currentRoomCount > 1) {
+                currentRoomCount--;
+                if (currentGuestCount > currentRoomCount * 2) {
+                    currentGuestCount = currentRoomCount * 2;
+                }
+                updateCounts();
+            }
+        });
+
+        // Increment room count
+        roomIncrementButton.addEventListener("click", () => {
+            if (currentRoomCount < 4) { // Limit room count to 4
+                currentRoomCount++;
+                if (currentGuestCount > currentRoomCount * 2) {
+                    currentGuestCount = currentRoomCount * 2;
+                }
+                updateCounts();
+            }
+        });
+
+        // Decrement guest count
+        guestDecrementButton.addEventListener("click", () => {
+            if (currentGuestCount > 1) {
+                currentGuestCount--;
+                updateCounts();
+            }
+        });
+
+        // Increment guest count
+        guestIncrementButton.addEventListener("click", () => {
+            if (currentGuestCount < currentRoomCount * 2) {
+                currentGuestCount++;
+                updateCounts();
+            }
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            // Debugging: Console log to ensure the script runs
+            console.log("Document is ready");
+
+            // Replace with the actual way you retrieve the password
+            var password = "{{ password }}";
+            console.log("Password:", password); // Debugging: Log the password
+
+            // Check if the password length is less than or equal to 6 characters
+            if (password.length <= 6) {
+                console.log("Showing modal - Password length is 6 or less");
+                $('#ModalCenter').modal('show');
+            } else {
+                console.log("Password length is more than 6");
+            }
+        });
+    </script>
+
+
+    <script>
+        // Function to handle the appearance of elements with the class 'slide-in'
+        function handleIntersection(entries, observer) {
+            entries.forEach((entry) => {
+                // Only act on the element if it is intersecting (visible on screen)
+                if (entry.isIntersecting) {
+                    // Add the 'visible' class to trigger the animation
+                    entry.target.classList.add('visible');
+                    // Remove the observer after the animation is triggered
+                    observer.unobserve(entry.target);
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Define the options for the IntersectionObserver
+            const options = {
+                rootMargin: '0px',
+                threshold: 0.1 // Trigger if at least 10% of the target is visible
+            };
+
+            // Create a new Intersection Observer instance
+            const observer = new IntersectionObserver(handleIntersection, options);
+
+            // Target the section to observe
+            const target = document.querySelector('.blog-section');
+
+            // Start observing the target
+            observer.observe(target);
+        });
+
+
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var roomItem = document.getElementById('rimg1');
+
+            roomItem.addEventListener('click', function () {
+                if (window.innerWidth < 760) {
+                    var hrText = this.querySelector('.hr-text');
+                    if (hrText.style.bottom === '135px') {
+                        hrText.style.bottom = ''; // Reset to default if already set
+                    } else {
+                        hrText.style.bottom = '135px'; // Set bottom to 135px
+                    }
+                }
+            });
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+            var roomItem = document.getElementById('rimg2');
+
+            roomItem.addEventListener('click', function () {
+                if (window.innerWidth < 760) {
+                    var hrText = this.querySelector('.hr-text');
+                    if (hrText.style.bottom === '135px') {
+                        hrText.style.bottom = ''; // Reset to default if already set
+                    } else {
+                        hrText.style.bottom = '135px'; // Set bottom to 135px
+                    }
+                }
+            });
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+            var roomItem = document.getElementById('rimg3');
+
+            roomItem.addEventListener('click', function () {
+                if (window.innerWidth < 760) {
+                    var hrText = this.querySelector('.hr-text');
+                    if (hrText.style.bottom === '135px') {
+                        hrText.style.bottom = ''; // Reset to default if already set
+                    } else {
+                        hrText.style.bottom = '135px'; // Set bottom to 135px
+                    }
+                }
+            });
+        });
+    </script>
+    <script>
+        function submitForm() {
+            var newPassword = $("#new_pass").val();
+            var reenteredPassword = $("#re_new_pass").val();
+
+            // Check if the passwords match
+            if (newPassword !== reenteredPassword) {
+                // Display an error message
+                $("#passwordMismatchError").text("Passwords do not match");
+                return;
+            }
+
+            // Check if the password length is at least 8 digits
+            if (newPassword.length < 8) {
+                // Display an error message
+                $("#passwordLengthError").text("Password must be at least 8 digits");
+                return;
+            }
+
+            // Passwords match and have the correct length, submit the form using AJAX
+            $.ajax({
+                type: "POST",
+                url: "#",
+                data: $("#resetpassword").serialize(),
+                success: function (response) {
+                    // Handle the success response
+                    console.log(response);
+                    if (response.success) {
+                        alert("Password reset successfully!");
+                        $('#ModalCenter').modal('hide'); // Close the modal on successful reset
+                    } else {
+                        alert("Password reset failed. " + response.error);
+                    }
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    // Handle the error response
+                    console.error("Error: " + xhr.responseText);
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

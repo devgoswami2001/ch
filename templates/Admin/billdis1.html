@@ -1,0 +1,674 @@
+{% extends 'base1.html' %}
+{% load static %}
+{% block content %}
+<style>
+    .invoice-container {
+        width: 80vw;
+        margin: 16px auto;
+        border: 1px solid #ddd;
+        padding: 16px;
+    }
+
+    .headerr {
+        text-align: center;
+        font-weight: bold;
+        color: red;
+        margin-top: 8px;
+        font-size: 24px;
+    }
+
+    .obs p {
+        margin: 0;
+        text-align: start;
+        margin-left: 8px;
+        font-size: 16px;
+    }
+
+    .sectionn {
+        margin-top: 16px;
+    }
+
+    .table,
+    .table th,
+    .table td {
+        width: 100%;
+        border: 1px solid #ddd;
+        border-collapse: collapse;
+        padding: 12px;
+        text-align: left;
+    }
+
+    .table th {
+        background-color: #f2f2f2;
+    }
+
+    .payment-section,
+    .total-section {
+        font-weight: bold;
+        font-size: 16px;
+    }
+
+    .footer {
+        font-size: 12px;
+        margin-top: 24px;
+    }
+
+    .ppp p {
+        margin: 0px;
+        margin-top: 8px;
+    }
+
+    .olo {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        padding-left: 8px;
+        padding-right: 8px;
+        margin-top: 16px;
+    }
+
+    img#qr {
+        max-width: 160px !important;
+        max-height: 160px !important;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+ 
+@media print {
+            body {
+                padding: 0;
+                margin: 0;
+                font-size: 14px;
+            }
+
+            .invoice-container {
+                width: 100%;
+                margin: 0;
+                border: none;
+                padding: 5px;
+                border: 1px solid #ddd;
+            }
+
+            .olo {
+                flex-wrap: nowrap;
+                margin:0;
+            }
+
+            .sectionn {
+                margin: 0;
+                padding: 0;
+           }
+
+            .table,
+            .table th,
+            .table td {
+                font-size: 15px;
+                padding: 2px;
+            }
+
+            .footer {
+                font-size: 8px;
+            }
+
+            img {
+                max-width: 150px;
+                max-height: 100px;
+            }
+
+            .no-print {
+                display: none;
+            }
+
+            .imgg {
+                max-width: 288px;
+            }
+        }
+
+
+
+    @media screen and (max-width: 768px) {
+        .invoice-container {
+            width: 100%;
+            padding: 12px;
+        }
+
+        .headerr {
+            font-size: 20px;
+        }
+
+        .obs p {
+            font-size: 14px;
+        }
+
+        .sectionn {
+            margin-top: 12px;
+        }
+
+        .table,
+        .table th,
+        .table td {
+            font-size: 14px;
+            padding: 8px;
+        }
+
+        .payment-section,
+        .total-section {
+            font-size: 14px;
+        }
+
+        .footer {
+            font-size: 10px;
+            margin-top: 16px;
+        }
+
+        img#qr {
+            max-width: 120px !important;
+            max-height: 120px !important;
+        }
+    }
+</style>
+
+     
+
+
+<div style="display: flex; flex-wrap: wrap;justify-content: space-between;">
+    <button class="btn btn-sm bg-success-light mr-2 no-print" onclick="printInvoice()"><i class="fas fa-print"></i>
+        Print</button>
+    <button type="button" class="btn btn-primary no-print" data-toggle="modal" data-target="#exampleModalCenter">
+        <i class="fas fa-pen"></i>Edit
+    </button>
+    <button type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-sm bg-danger-light no-print">
+        <i class="fas fa-trash"></i>
+    </button>
+</div>
+<div class="invoice-container">
+    <div class="ppp"
+        style="display: flex; justify-content: space-between; border-bottom: 2px solid black; padding-bottom: 5px;">
+        <img src="{% static '/img/pvz.png' %}" alt="" srcset="" style="max-width: 188px; max-height: 173px;;">
+        <div>
+            <div style="display: flex; ">
+                <p><strong>Address:&nbsp;</strong></p>
+                <p>Shop No.12,</br> C-Block Market,</br>New Friends Colony,</br>New Delhi-25</p>
+            </div>
+            <div style="display: flex;">
+                <p><strong>Mobile&nbsp;&nbsp;&nbsp;:&nbsp;</strong></p>
+                <p>+91 98916 71848</p>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+                <p><strong>Email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;</strong></p>
+                <p>pravez9015161541@gmail.com</p>
+            </div>
+        </div>
+    </div>
+    <div class="headerr">Original Tax Invoice</div>
+
+    <div class="olo">
+        <div class="sectionn">
+            <div><strong>Invoice Details:</strong></div>
+            <p>Invoice No: {{ s.invoice_no }}<br>
+                Date: {{ s.date }}<br>
+                Service Category: Renting of Motor<br>
+        </div>
+
+        <div class="sectionn">
+            <div><strong>Customer Details:</strong></div>
+            <p>Customer Name: {{s.c_n}}<br>
+                Place of Supply: {{s.add}}<br>
+                {% if s.mob == "NA" %}
+                Phone: -<br>
+                {% else %}
+                Phone: {{s.mob}}<br>
+                {% endif %}
+                {% if s.email == "NA" %}
+                Email: -</p>
+            {% else %}
+            Email: {{s.email}}</p>
+            {% endif %}
+
+        </div>
+    </div>
+    {% for v in vv %}
+    <div class="sectionn obs">
+        <div style="color: red; ">Trip Details {{ forloop.counter }}: Vehicle No: {{v.v}} -- Driver Name:{{v.d_n}}</div>
+        <div
+            style="display: flex;flex-wrap: wrap;justify-content: space-around; border: 1px solid #ddd; border-radius: 11px; margin-top: 6px; padding-top: 10px; padding-bottom: 10px;">
+            <div style="text-align: center; display: flex;">
+                <div>
+                    <strong>Way:</strong>
+                </div>
+                <div>
+                    {% if v.way == "1" %}
+                    <p>One Way</p>
+                    {% else %}
+                    <p>Return</p>
+                    {% endif %}
+                    <p>{{v.date}}</p>
+                </div>
+            </div>
+            <div style="text-align: center; display: flex;">
+                <div>
+                    <strong>From:</strong>
+                </div>
+                <div>
+                    <p>{{v.fr}}</p>
+                </div>
+            </div>
+            <div style="text-align: center; display: flex;">
+                <div>
+                    <strong>To:</strong>
+                </div>
+                <div>
+                    <p> {{v.to}} </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sectionn">
+        <div style="color: red;">Guest Details:</div>
+        <div style="border: 1px solid #ddd; padding-left: 8px; border-radius: 11px; margin-top: 6px;">
+            <p> {{v.guest}}</p>
+        </div>
+    </div>
+
+    <div class="sectionn">
+        <div style="color: red; margin-bottom: 6px;">Fare Details:</div>
+        <table class="table">
+            <tr>
+                <th>Fare/Charges</th>
+                <th>&nbsp;&nbsp;&nbsp;&nbsp;KM&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rate&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Amount&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+            </tr>
+            <tr>
+                <td>Base Fare</td>
+                <td>{{v.km}}</td>
+                <td>Rs. {{v.base_fare}}</td>
+                <td>Rs. {{v.base_fare}}</td>
+            </tr>
+            {% if v.apk != '0.00' %}
+            <tr>
+                <td>Extra Km</td>
+                <td>{{v.Ekm}}</td>
+                <td>Rs. {{v.ppk}}</td>
+                <td>Rs. {{v.apk}}</td>
+            </tr>
+            {% endif %}
+            {% if v.aph != '0.00' %}
+            <tr>
+                <td>Extra Hr.</td>
+                <td>{{v.Exh}}</td>
+                <td>Rs. {{v.pph}}</td>
+                <td>Rs. {{v.aph}}</td>
+            </tr>
+            {% endif %}
+            {% if v.dis != '0' or v.dis != ' ' %}
+            <tr>
+                <td>Discount</td>
+                <td>-</td>
+                <td>-</td>
+                <td>Rs. -{{v.dis}}</td>
+            </tr>
+            {% endif %}
+            <tr>
+                <td>Toll Tax</td>
+                <td>-</td>
+                <td>-</td>
+                <td>Rs. {{v.toll}}</td>
+            </tr>
+            {% if v.igst != '0' %}
+            <tr>
+                <td>IGST @ 5.0%</td>
+                <td>-</td>
+                <td>-</td>
+                <td>Rs. {{v.igst}}</td>
+            </tr>
+            {% endif %}
+            <tr class="total-section">
+                <td colspan="3">Total:</td>
+                <td>Rs. {{v.total}}</td>
+            </tr>
+        </table>
+    </div>
+    {% endfor %}
+    <div class="sectionn obs">
+        <div style="color: red; ">Payment Details:</div>
+        <div class="sectionn">
+            <table class="table">
+                <tr>
+                    <th colspan="3">Charges</th>
+                    <th>&nbsp;&nbsp;&nbsp;Amount&nbsp;&nbsp;&nbsp;</th>
+                </tr>
+                <tr class="total-section">
+                    <td style="background-color: #ffeb7c;" colspan="3">Grand Total:</td>
+                    <td style="background-color: #ffeb7c;">Rs. {{s.g_t}}</td>
+                </tr>
+            </table>
+        </div>
+        <div
+            style="display: flex;flex-wrap: wrap;justify-content: space-around; border: 1px solid #ddd; border-radius: 11px; margin-top: 6px; padding-top: 10px; padding-bottom: 10px;">
+            <div style="text-align: center;">
+                <div>
+                    <strong>Wallet:</strong>
+                </div>
+                <div style="margin-top: 8px;">
+                    <p>Rs. {{s.wallet}}</p>
+                </div>
+            </div>
+            <div style="text-align: center;">
+                <div>
+                    <strong>Cash:</strong>
+                </div>
+                <div style="margin-top: 8px;">
+                    <p>Rs. {{s.cash}}</p>
+                </div>
+            </div>
+            <div style="text-align: center;">
+                <div>
+                    <strong>Online:</strong>
+                </div>
+                <div style="margin-top: 8px;">
+                    <p> Rs. {{s.online}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p style="font-size: 20px;">Please note:
+            </br> {{s.terms_and_conditions}}
+        </p>
+        <div style="display: flex; justify-content: end;">
+           <div> <img src="{% static '/img/pvs.png' %}" alt="" srcset="" style="max-width: 230px;">
+            <p style="text-align: end; padding-right: 30px; font-size: 15px;">
+                <strong>Authorized Signatory</strong>
+            </p></div>
+        </div>
+    </div>
+    <div style="display: flex; justify-content: space-between;">
+        <div class="ppp">
+            <p style="margin: 5px; color: red;">Bank Details:</p>
+            <div
+                style="border: 2px solid #ddd; width: 456px; height: 156px; border-radius: 11px; padding: 5px; font-size:12px;">
+                <div style="display: flex;">
+                    <p><strong>Bank Name: </strong></p>
+                    <p> INDIAN OVERSEAS BANK</p>
+                </div>
+                <div style="display: flex;">
+                    <p><strong>Account Holder Name:</strong></p>
+                    <p>PARVEZ KHAN</p>
+                </div>
+                <div style="display: flex;">
+                    <p><strong>Account Number: </strong></p>
+                    <p> 199902000000059</p>
+                </div>
+
+                <div style="display: flex;">
+                    <p><strong>IFSC Code: </strong></p>
+                    <p> IOBA0001999</p>
+                </div>
+                <div style="display: flex;">
+                    <p><strong>Address: </strong></p>
+                    <p> GLA ENGINEERING COLLEGE, AJHAI(1999) BRANCH AJHAI - 281406</p>
+                </div>
+            </div>
+        </div>
+        <div>
+            <img id="qr" src="data:image/png;base64,{{ s.qr_code }}" alt="Bus Pass QR Code">
+        </div>
+    </div>
+</div>
+<script>
+    function printInvoice() {
+        window.print();
+    }
+</script>
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Edit Bill Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'update_billing' %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="form-title"><span>Customer Details</span></h5>
+                                    <div style="display: flex; flex-wrap: wrap">
+                                        <!-- Customer Details Fields -->
+                                        <div class="col-12 col-sm-6">
+                                            <div class="form-group">
+                                                <label>Customer Name:* </label>
+                                                <input type="text" class="form-control" value="{{ s.c_n }}" name="cn" required />
+                                                <input type="hidden" class="form-control" value="{{ s.id }}" name="bill_id"  />
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-sm-6">
+                                            <div class="form-group">
+                                                <label>Mobile Number:* </label>
+                                                <input type="number" class="form-control" value="{{ s.mob }}" name="mob" required />
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-sm-6">
+                                            <div class="form-group">
+                                                <label>Address: </label>
+                                                <input type="text" class="form-control" value="{{ s.add }}" name="add" />
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-sm-6">
+                                            <div class="form-group">
+                                                <label>Email: </label>
+                                                <input type="email" class="form-control" value="{{ s.email }}" name="email" />
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-sm-6">
+                                            <div class="form-group">
+                                                <label>Date: </label>
+                                                <input type="date" class="form-control" value="{{ s.date }}" name="date" />
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-sm-6">
+                                            <div class="form-group">
+                                                <label>Payment Method: </label>
+                                                <select class="form-control" name="pay" required>
+                                                    {% if s.wallet != '0' %}
+                                                    <option value="1">Wallet</option>
+                                                    {% elif s.cash != '0' %}
+                                                    <option value="2">Cash</option>
+                                                    {% else %}
+                                                    <option value="3">Online</option>
+                                                    {% endif %}
+                                                    <option value="1">Wallet</option>
+                                                    <option value="2">Cash</option>
+                                                    <option value="3">Online</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-sm-6">
+                                            <div class="form-group">
+                                                <label>Grand Total: </label>
+                                                <input type="number" class="form-control" value="{{ s.g_t }}"  name="gt" id="grand-total"  />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% for v in vv %}
+                    <div id="vehicle-info-container">
+                        <div class="vehicle-info" data-vehicle-id="{{ v.id }}">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="form-title"><span>Vehicle Info {{ forloop.counter }}</span></h5>
+                                            <div style="display: flex; flex-wrap: wrap">
+                                                <!-- Vehicle-specific Fields -->
+                                                <div class="col-12 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>Vehicle Number:* </label>
+                                                        <input type="text" class="form-control" value="{{ v.v }}" name="vc{{ forloop.counter }}" required />
+                                                        <input type="hidden" class="form-control" value="{{ v.id }}" name="vehicle_id_{{ forloop.counter }}" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>Driver Name:* </label>
+                                                        <input type="text" class="form-control" value="{{ v.d_n }}" name="dn{{ forloop.counter }}" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>Date:* </label>
+                                                        <input type="date" class="form-control" value="{{ v.date }}" name="date{{ forloop.counter }}" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>Way:* </label>
+                                                        <select class="form-control" name="way{{ forloop.counter }}" required>
+                                                            <option value="{{ v.way }}">
+                                                                {% if v.way == '1' %}One Way
+                                                                {% else %}Return
+                                                                {% endif %}
+                                                            </option>
+                                                            <option value="1">One Way</option>
+                                                            <option value="2">Return</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>From:* </label>
+                                                        <input type="text" class="form-control" value="{{ v.fr }}" name="fr{{ forloop.counter }}" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>To:* </label>
+                                                        <input type="text" class="form-control" value="{{ v.to }}" name="to{{ forloop.counter }}" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>Guest:* </label>
+                                                        <input type="text" class="form-control" value="{{ v.guest }}" name="guest{{ forloop.counter }}" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>Base Fare:* </label>
+                                                        <input type="number" class="form-control" name="bf{{ forloop.counter }}" value="{{ v.base_fare }}" id="bf{{ forloop.counter }}" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>Extra Km:* </label>
+                                                        <input type="number" class="form-control" value="{{ v.Ekm }}"  name="Ekm{{ forloop.counter }}" id="Ekm{{ forloop.counter }}" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>Price Per Km:* </label>
+                                                        <input type="number" class="form-control"  value="{{ v.ppk }}"  name="ppk{{ forloop.counter }}" id="ppk{{ forloop.counter }}" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>Amount Per Km:* </label>
+                                                        <input type="number" class="form-control" value="{{ v.apk }}" name="apk{{ forloop.counter }}" id="apk{{ forloop.counter }}" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>Extra Hr:* </label>
+                                                        <input type="number" class="form-control" value="{{ v.Exh }}" name="Exh{{ forloop.counter }}" id="Exh{{ forloop.counter }}" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>Price Per Hr:* </label>
+                                                        <input type="number" class="form-control" value="{{ v.pph }}" name="pph{{ forloop.counter }}" id="pph{{ forloop.counter }}" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>Amount Per Hr:* </label>
+                                                        <input type="number" class="form-control" value="{{ v.aph }}" name="aph{{ forloop.counter }}" id="aph{{ forloop.counter }}" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>Discount:* </label>
+                                                        <input type="number" class="form-control" value="{{ v.dis }}" name="dis{{ forloop.counter }}" id="dis{{ forloop.counter }}" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>Toll:* </label>
+                                                        <input type="number" class="form-control" value="{{ v.toll }}" name="toll{{ forloop.counter }}" id="toll{{ forloop.counter }}" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>Igst:* </label>
+                                                        <input type="number" class="form-control" value="{{ v.igst }}" name="ig{{ forloop.counter }}" id="ig{{ forloop.counter }}" required />
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-sm-6">
+                                                    <div class="form-group">
+                                                        <label>Total:* </label>
+                                                        <input type="number" class="form-control" value="{{ v.total }}" name="total{{ forloop.counter }}" id="total{{ forloop.counter }}"  />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Confirm to delete the bill
+        </div>
+        <div class="modal-footer">
+            <a href="{% url 'delete_bill' s.id %}"  class="btn btn-sm bg-danger-light no-print">
+                <i class="fas fa-trash"> Delete</i>
+            </a>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

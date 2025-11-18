@@ -1,0 +1,106 @@
+{% extends 'base1.html' %}
+{% block content %}
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <form action="{% url 'vehcile_mm' %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="col-12">
+                        <h5 class="form-title"><span>Vehicle Maintenance </span></h5>
+                        {% include 'includes/messages.html' %}
+                    </div>
+                    <div style="display: flex;
+                    flex-wrap: wrap;">
+                    <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                            <label>Vehicle: </label>
+                            <select class="form-control" name="number" required>
+                                {% for v in vv %}
+                                <option value="{{v.id}}">{{v.registration_no}} </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label>Select Image: </label>
+                                <input type="file" class="form-control" name="image" accept="image/*" required>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label>session : </label>
+                                <select class="form-control" name="session" required>
+                                    <option value="2024-25">2024-25 </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label>Category: </label>
+                                <select class="form-control" name="category" required>
+                                    <option value="Maintenance">Maintenance </option>
+                                    <option value="General Service">General Service </option>
+                                    <option value="AC Service">AC Service </option>
+                                    <option value="Service">Service</option>
+                                    <option value="Toll Tax">Toll Tax</option>
+                                    <option value="Fuel">Fuel</option>
+                                    <option value="CNG">CNG</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label>Date: </label>
+                                <input type="date" class="form-control" name="date" required>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label>Work: </label>
+                                <textarea class="form-control" name="work" required></textarea>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label>Vendor : </label>
+                                <input type="data" class="form-control" name="vendor" required>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label>Amount : </label>
+                                <input type="number" class="form-control" name="amount" required>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label>Status: </label>
+                                <select class="form-control" name="status" required>
+                                    <option value=""> </option>
+                                    <option value="Approved">Approved </option>
+                                    <option value="Pending">Pending</option>
+                                    <option value="Reject">Reject</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label>Remarks : </label>
+                                <textarea class="form-control" name="remarks" required></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

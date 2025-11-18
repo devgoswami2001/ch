@@ -1,0 +1,360 @@
+{% load static %}
+<div class="sidebar no-print" id="sidebar">
+   <div class="sidebar-inner slimscroll">
+      <div id="sidebar-menu" class="sidebar-menu">
+         {% if user.user_type == '1' %}
+         <ul>
+            <li class="menu-title">
+               <span>Main Menu</span>
+            </li>
+            <li>
+               <a href="{% url 'AdminHome' %}"><i class="fas fa-laptop"></i> <span> Dashboard</span></a>
+            </li>
+            <li class="submenu">
+               <a href="#"><i class="fas fa-book"></i> <span> Advance Book</span> <span
+                     class="menu-arrow"></span></a>
+               <ul>
+                  <li><a href="{% url 'adv_book' %}"> Create booking</a></li>
+                  <li><a href="{% url 'edit_adv_booking' %}"> View booking</a></li>
+               </ul>
+            </li>
+            <li class="submenu">
+               <a href="#"><i class="fas fa-graduation-cap"></i> <span> Billing</span> <span
+                     class="menu-arrow"></span></a>
+               <ul>
+                  <li><a href="{% url 'billing' %}"> Chaudhary T&T</a></li>
+                  <li><a href="{% url 'billingg' %}"> Parvez Khan</a></li>
+                  <li><a href="{% url 'vbill' %}"> View Bills</a></li>
+               </ul>
+            </li>
+            <li class="submenu">
+               <a href="#"><i class="fas fa-car"></i> <span> Vehicle Info</span> <span class="menu-arrow"></span></a>
+               <ul>
+                  <li><a href="{% url 'Add_vehicle' %}"> Add Vehicle</a></li>
+                  <li><a href="{% url 'view_vehicle' %}"> View Vehicle </a></li>
+                  <li><a href="{% url 'vehcile_mm' %}"> Maintenance </a></li>
+               </ul>
+            </li>
+            <li class="submenu">
+               <a href="#"><i class="fas fa-gas-pump"></i><span> Fuel Details</span> <span class="menu-arrow"></span></a>
+               <ul>
+                  <li><a href="{% url 'fuel' %}"> Fuel Entry</a></li>
+                  <li><a href="{% url 'vfuel' %}"> Fuel Report </a></li>
+               </ul>
+            </li>
+            <li class="submenu">
+               <a href="#"><i class="fas fa-newspaper"></i>
+                  <span> Daily Report</span> <span class="menu-arrow"></span></a>
+               <ul>
+                  <li><a href="{% url 'Daily_entry' %}"> In Out Entry</a></li>
+                  <li><a href="{% url 'vDaily_entry' %}"> Daily Report</a></li>
+               </ul>
+            </li>
+            <li class="submenu">
+               <a href="#"><i class="fas fa-newspaper"></i>
+                  <span> Daily Report Others</span> <span class="menu-arrow"></span></a>
+               <ul>
+                  <li><a href="{% url 'Daily_entryo' %}"> In Out Entry</a></li>
+                  <li><a href="{% url 'vDaily_entryo' %}"> Daily Report</a></li>
+               </ul>
+            </li>
+            <li class="submenu">
+               <a href="#"><i class="fas fa-newspaper"></i>
+                  <span> Bill Book</span> <span class="menu-arrow"></span></a>
+               <ul>
+                  <li><a href="{% url 'billbook' %}"> Add Bill</a></li>
+                  <li><a href=""> View Bill</a></li>
+               </ul>
+            </li>
+            <li class="submenu">
+               <a href="#"><i class="fas fa-newspaper"></i>
+                  <span> Vendor Bill Book</span> <span class="menu-arrow"></span></a>
+               <ul>
+                  <li><a href="{% url 'vendor_bill' %}"> Add Bill</a></li>
+                  <li><a href=""> View Bill</a></li>
+               </ul>
+            </li>
+
+            <li class="">
+               <a href="{% url 'doLogout' %}"><i class="fas fa-sign-out-alt"></i> <span> Logout</span></a>
+            </li>
+         </ul>
+         {% elif user.user_type == '6' %}
+         <ul>
+            <li class="menu-title">
+               <span>Main Menu</span>
+            </li>
+            <li>
+               <a href="{% url 'Staffhome' %}"><i class="fas fa-laptop"></i> <span> Dashboard</span></a>
+            </li>
+            <li class="submenu">
+               <a href="#"><i class="fas fa-bus"></i> <span> Bus Booking</span> <span class="menu-arrow"></span></a>
+               <ul>
+                  <li><a href="{% url 'bookseat' %}"><i class="fas fa-seat"></i> Book Bus Seat</a></li>
+                  <li><a href="{% url 'Viewbookseat' %}"><i class="fas fa-seat"></i> View Bus Seat</a></li>
+               </ul>
+            </li>
+            <li class="submenu">
+               <a href="#"><i class="fas fa-comment"></i> <span> Grievance</span> <span class="menu-arrow"></span></a>
+               <ul>
+                  <li><a href="{% url 'complainS' %}"><i class="fas fa-seat"></i> File Complain</a></li>
+                  <li><a href="{% url 'view_complainS' %}"><i class="fas fa-seat"></i> View Complains</a></li>
+               </ul>
+            </li>
+            <li>
+               <a href="{% url 'view_messageStaff' %}"><i class="fa fa-bell"></i> <span> View Notification</span></a>
+            </li>
+         </ul>
+         {% elif user.user_type == '7' %}
+         <ul>
+            <li class="menu-title">
+               <span>Main Menu</span>
+            </li>
+            <li>
+               <a href="{% url 'StudentHome' %}"><i class="fa fa-laptop"></i> <span> Dashboard</span></a>
+            </li>
+            <li class="submenu">
+               <a href="#"><i class="fas fa-bus"></i> <span> Bus Booking</span> <span class="menu-arrow"></span></a>
+               <ul>
+                  <li><a href="{% url 'BookSeat' %}"><i class="fas fa-seat"></i> Book Seat</a></li>
+                  <li><a href="{% url 'View_Bus_seat' %}"><i class="fas fa-seat"></i> View Bus Pass</a></li>
+               </ul>
+            </li>
+            <li class="submenu">
+               <a href="#"><i class="fas fa-comment"></i> <span> Grievance</span> <span class="menu-arrow"></span></a>
+               <ul>
+                  <li><a href="{% url 'complain' %}"><i class="fas fa-seat"></i> File Complain</a></li>
+                  <li><a href="{% url 'view_complain' %}"><i class="fas fa-seat"></i> View Complains</a></li>
+               </ul>
+            </li>
+            <li>
+               <a href="{% url 'view_message' %}"><i class="fa fa-bell"></i> <span> View Notification</span></a>
+            </li>
+            <li>
+               <a href="{% url 'penalty' %}"><i class="fa fa-ban"></i> <span> View Penalty</span></a>
+            </li>
+         </ul>
+         {% elif user.user_type == '4' %}
+         <ul>
+            <li class="menu-title">
+               <span>Main Menu</span>
+            </li>
+            <li>
+               <a href="{% url 'ManagerHome' %}"><i class="fa fa-laptop"></i> <span> Dashboard</span></a>
+            </li>
+            <li class="submenu">
+               <a href="#"><i class="fas fa-graduation-cap"></i> <span> Student</span> <span
+                     class="menu-arrow"></span></a>
+               <ul>
+                  <li><a href="{% url 'View_StudentM' %}"> View Student </a></li>
+               </ul>
+            </li>
+            <li class="submenu">
+               <a href="#"><i class="fas fa-user"></i> <span> Staff</span> <span class="menu-arrow"></span></a>
+               <ul>
+                  <li><a href="{% url 'view_staffM' %}"> View Staff </a></li>
+               </ul>
+            </li>
+            <li class="submenu">
+               <a href="#"><i class="fas fa-car"></i> <span> Vehicle Info</span> <span class="menu-arrow"></span></a>
+               <ul>
+                  <li><a href="{% url 'Add_vehicleM' %}"> Add Vehicle</a></li>
+                  <li><a href="{% url 'view_vehicleM' %}"> View Vehicle </a></li>
+                  <li><a href="{% url 'vehcile_mmM' %}"> Maintenance </a></li>
+                  <li><a href="{% url 'view_updateM' %}"> Update </a></li>
+               </ul>
+            </li>
+            <li class="submenu">
+               <a href="#"><i class="fas fa-clock"></i> <span> Shift</span> <span class="menu-arrow"></span></a>
+               <ul>
+                  <li><a href="{% url 'AddShiftM' %}"> Add Shift</a></li>
+                  <li><a href="{% url 'VShiftM' %}"> View Shift </a></li>
+               </ul>
+            </li>
+            <li class="submenu">
+               <a href="#"><i class="fas fa-chalkboard-teacher"></i> <span> Course Selection</span> <span
+                     class="menu-arrow"></span></a>
+               <ul>
+                  <li><a href="{% url 'selectM' %}"> Add Course to timing</a></li>
+                  <li><a href="{% url 'viewselectM' %}"> View Course to timing </a></li>
+               </ul>
+            </li>
+            <li class="submenu">
+               <a href="#"><i class="fas fa-flag"></i> <span> Stoppage</span> <span class="menu-arrow"></span></a>
+               <ul>
+                  <li><a href="{% url 'create_stoppageM' %}"> Add Stoppages</a></li>
+                  <li><a href="{% url 'view_stoppageM' %}"> View Stoppages </a></li>
+               </ul>
+            </li>
+            <li class="submenu ">
+               <a href="#"><i class="fas fa-route"></i> <span> Route</span> <span class="menu-arrow"></span></a>
+               <ul>
+                  <li><a href="{% url 'create_routM' %}"> Add Routes</a></li>
+                  <li><a href="{% url 'VrouteM' %}"> View Routes </a></li>
+               </ul>
+            </li>
+            </li>
+            <li class="submenu ">
+               <a href="#"><i class="fas fa-map-marker"></i> <span> Route Stoppage</span> <span
+                     class="menu-arrow"></span></a>
+               <ul>
+                  <li><a href="{% url 'AddStoppagesM' %}"> Add Route Stoppage</a></li>
+                  <li><a href="{% url 'ViewStoppagesM' %}"> View Route Stoppage </a></li>
+               </ul>
+            </li>
+            <li class="submenu ">
+               <a href="#"><i class="fas fa-bus"></i> <span> Bus</span> <span class="menu-arrow"></span></a>
+               <ul>
+                  <li><a href="{% url 'Buss_AllotmentM' %}"> Add Bus</a></li>
+                  <li><a href="{% url 'View_BusAllotmentM' %}"> View Buses </a></li>
+               </ul>
+            </li>
+            <li class="submenu ">
+               <a href="#"><i class="fas fa-chair"></i> <span> View Bus Seat </span> <span class="menu-arrow"></span></a>
+               <ul>
+                  <li><a href="{% url 'View_bus_seatM' %}"> All Seats </a></li>
+               </ul>
+            </li>
+            <li class="submenu ">
+               <a href="#"><i class="fas fa-bell"></i> <span> Send Notification</span> <span
+                     class="menu-arrow"></span></a>
+               <ul>
+                  <li><a href="{% url 'messageM' %}"> Send Student Notifocation </a></li>
+                  <li><a href="{% url 'messageSM' %}"> Send Staff Notofocation </a></li>
+                  <li><a href="{% url 'view_messagesM' %}"> View Notifocation </a></li>
+               </ul>
+            </li>
+            <li class="submenu">
+               <a href="#"><i class="fas fa-comment"></i> <span> Grievance</span> <span class="menu-arrow"></span></a>
+               <ul>
+                  <li><a href="{% url 'complainAM' %}"><i class="fas fa-seat"></i> View Complains</a></li>
+               </ul>
+            </li>
+            <li class="submenu">
+               <a href="#"><i class="fas fa-file"></i> <span> Terms And Condition</span> <span class="menu-arrow"></span></a>
+               <ul>
+                   <li><a href="{% url 'Viewtc' %}"><i class="fas fa-seat"></i> View T&C</a></li>
+               </ul>
+           </li>
+            <li class="submenu">
+               <a href="#"><i class="fas fa-file"></i> <span> Penalty</span> <span class="menu-arrow"></span></a>
+               <ul>
+                  <li><a href="{% url 'panalM' %}"><i class="fas fa-seat"></i> Add Penalty</a></li>
+                  <li><a href="{% url 'viewpanalM' %}"><i class="fas fa-seat"></i> View Penalty</a></li>
+               </ul>
+            </li>
+            <li class="">
+               <a href="{% url 'doLogout' %}"><i class="fas fa-sign-out-alt"></i> <span> Logout</span></a>
+            </li>
+         </ul>
+         {% elif user.user_type == '5' %}
+         <ul>
+            <li class="menu-title">
+               <span>Main Menu</span>
+            </li>
+            <li>
+               <a href="{% url 'ExecutiveHome' %}"><i class="fa fa-laptop"></i> <span> Dashboard</span></a>
+            </li>
+            <li class="submenu">
+               <a href="#"><i class="fas fa-graduation-cap"></i> <span> Student</span> <span
+                     class="menu-arrow"></span></a>
+               <ul>
+                  <li><a href="{% url 'View_StudentE' %}"> View Student </a></li>
+                  <li><a href="{% url 'scan_bus_pass' %}"> Check Student </a></li>
+               </ul>
+            </li>
+            <li class="submenu">
+               <a href="#"><i class="fas fa-user"></i> <span> Staff</span> <span class="menu-arrow"></span></a>
+               <ul>
+                  <li><a href="{% url 'view_staffE' %}"> View Staff </a></li>
+               </ul>
+            </li>
+            <li class="submenu">
+               <a href="#"><i class="fas fa-clock"></i> <span> Shift</span> <span class="menu-arrow"></span></a>
+               <ul>
+                  <li><a href="{% url 'VShiftE' %}"> View Shift </a></li>
+               </ul>
+            </li>
+            <li class="submenu">
+               <a href="#"><i class="fas fa-car"></i> <span> Vehicle Info</span> <span class="menu-arrow"></span></a>
+               <ul>
+                  <li><a href="{% url 'Add_vehicleE' %}"> Add Vehicle</a></li>
+                  <li><a href="{% url 'view_vehicleE' %}"> View Vehicle </a></li>
+                  <li><a href="{% url 'vehcile_mmE' %}"> Maintenance </a></li>
+               </ul>
+            </li>
+            <li class="submenu">
+               <a href="#"><i class="fas fa-chalkboard-teacher"></i> <span> Course Selection</span> <span
+                     class="menu-arrow"></span></a>
+               <ul>
+                  <li><a href="{% url 'viewselectE' %}"> View Course to timing </a></li>
+               </ul>
+            </li>
+            <li class="submenu">
+               <a href="#"><i class="fas fa-flag"></i> <span> Stoppage</span> <span class="menu-arrow"></span></a>
+               <ul>
+                  <li><a href="{% url 'view_stoppageE' %}"> View Stoppages </a></li>
+               </ul>
+            </li>
+            <li class="submenu ">
+               <a href="#"><i class="fas fa-route"></i> <span> Route</span> <span class="menu-arrow"></span></a>
+               <ul>
+                  <li><a href="{% url 'VrouteE' %}"> View Routes </a></li>
+               </ul>
+            </li>
+            </li>
+            <li class="submenu ">
+               <a href="#"><i class="fas fa-map-marker"></i> <span> Route Stoppage</span> <span
+                     class="menu-arrow"></span></a>
+               <ul>
+                  <li><a href="{% url 'ViewStoppagesE' %}"> View Route Stoppage </a></li>
+               </ul>
+            </li>
+            <li class="submenu ">
+               <a href="#"><i class="fas fa-bus"></i> <span> Bus</span> <span class="menu-arrow"></span></a>
+               <ul>
+                  <li><a href="{% url 'View_BusAllotmentE' %}"> View Buses </a></li>
+               </ul>
+            </li>
+            <li class="submenu ">
+               <a href="#"><i class="fas fa-chair"></i> <span> View Bus Seat </span> <span class="menu-arrow"></span></a>
+               <ul>
+                  <li><a href="{% url 'View_bus_seatE' %}"> All Seats </a></li>
+               </ul>
+            </li>
+            <li class="submenu ">
+               <a href="#"><i class="fas fa-bell"></i> <span> Send Notification</span> <span
+                     class="menu-arrow"></span></a>
+               <ul>
+                  <li><a href="{% url 'messageE' %}"> Send Student Notifocation </a></li>
+                  <li><a href="{% url 'messageSE' %}"> Send Staff Notofocation </a></li>
+                  <li><a href="{% url 'view_messagesE' %}"> View Notifocation </a></li>
+               </ul>
+            </li>
+            <li class="submenu">
+               <a href="#"><i class="fas fa-comment"></i> <span> Grievance</span> <span class="menu-arrow"></span></a>
+               <ul>
+                  <li><a href="{% url 'complainAE' %}"><i class="fas fa-seat"></i> View Complains</a></li>
+               </ul>
+            </li>
+            <li class="submenu">
+               <a href="#"><i class="fas fa-file"></i> <span> Terms And Condition</span> <span class="menu-arrow"></span></a>
+               <ul>
+                   <li><a href="{% url 'ViewtcE' %}"><i class="fas fa-seat"></i> View T&C</a></li>
+               </ul>
+           </li>
+            <li class="submenu">
+               <a href="#"><i class="fas fa-file"></i> <span> Penalty</span> <span class="menu-arrow"></span></a>
+               <ul>
+                  <li><a href="{% url 'panalE' %}"><i class="fas fa-seat"></i> Add Penalty</a></li>
+                  <li><a href="{% url 'viewpanalE' %}"><i class="fas fa-seat"></i> View Penalty</a></li>
+               </ul>
+            </li>
+            <li class="">
+               <a href="{% url 'doLogout' %}"><i class="fas fa-sign-out-alt"></i> <span> Logout</span></a>
+            </li>
+         </ul>
+         {% endif %}
+      </div>
+   </div>
+</div>

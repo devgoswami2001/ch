@@ -1,0 +1,152 @@
+{% extends 'base1.html' %}
+{% block content %}
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+                <form action="{% url 'fuel' %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="col-12">
+                        <h5 class="form-title"><span>Fuel Entry</span></h5>
+                        {% include 'includes/messages.html' %}
+                    </div>
+                    <div style="display: flex; flex-wrap: wrap;">
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label>Select Vehicle:</label>
+                                <select name="id" class="form-control">
+                                    <option value="">All</option>
+                                    {% for v in V %}
+                                    <option value="{{ v.id }}">{{ v.registration_no }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label>Last Meter Reading:</label>
+                                <input type="number" class="form-control" name="lmr" id="last_meter" disabled>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label>Date:</label>
+                                <input type="date" class="form-control" name="date" required>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label>Current Meter Reading:</label>
+                                <input type="number" class="form-control" name="cmr" id="current_meter" required>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label>Fuel (ltr.):</label>
+                                <input type="number" class="form-control" name="fuel" id="fuel" required>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label>Price:</label>
+                                <input type="number" class="form-control" name="pre" id="pre" required>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label>Average:</label>
+                                <input type="number" class="form-control" name="avg_display" id="average" disabled>
+                                <!-- Add a hidden input to store the avg value -->
+                                <input type="hidden" name="avg" id="avg_hidden">
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label>Amount:</label>
+                                <input type="number" class="form-control" name="amt" id="amt" disabled>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const vehicleSelect = document.querySelector("select[name='id']");
+        const lastMeter = document.getElementById("last_meter");
+        const currentMeter = document.getElementById("current_meter");
+        const fuel = document.getElementById("fuel");
+        const price = document.getElementById("pre");
+        const average = document.getElementById("average");
+        const amount = document.getElementById("amt");
+        const avgHidden = document.getElementById("avg_hidden"); // Hidden input for avg
+        const form = document.querySelector("form");
+
+        // Fetch the last meter reading when a vehicle is selected
+        vehicleSelect.addEventListener("change", function () {
+            const vehicleId = this.value;
+
+            if (vehicleId) {
+                const url = `/Admin/get-last-meter-reading/${vehicleId}/`;
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        lastMeter.value = data.last_meter || 0;
+                    })
+                    .catch(error => {
+                        console.error("Error fetching last meter reading:", error);
+                        lastMeter.value = 0;
+                    });
+            } else {
+                lastMeter.value = "";
+            }
+        });
+
+        // Function to calculate average
+        function calculateAverage() {
+            const lastMeterValue = parseFloat(lastMeter.value) || 0;
+            const currentMeterValue = parseFloat(currentMeter.value) || 0;
+            const fuelValue = parseFloat(fuel.value) || 0;
+
+            if (currentMeterValue > lastMeterValue && fuelValue > 0) {
+                const distance = currentMeterValue - lastMeterValue;
+                const avg = distance / fuelValue;
+                average.value = avg.toFixed(2);
+                avgHidden.value = avg.toFixed(2); // Update hidden input
+            } else {
+                average.value = "";
+                avgHidden.value = ""; // Clear hidden input
+            }
+        }
+
+        // Function to calculate amount
+        function calculateAmount() {
+            const fuelValue = parseFloat(fuel.value) || 0;
+            const priceValue = parseFloat(price.value) || 0;
+
+            const total = fuelValue * priceValue;
+            amount.value = total.toFixed(2);
+        }
+
+        // Add event listeners to calculate values dynamically
+        currentMeter.addEventListener("input", calculateAverage);
+        fuel.addEventListener("input", () => {
+            calculateAverage();
+            calculateAmount();
+        });
+        price.addEventListener("input", calculateAmount);
+
+        // Enable disabled fields before form submission
+        form.addEventListener("submit", function () {
+            average.disabled = false; // Enable the average field
+        });
+    });
+</script>
+
+{% endblock %}

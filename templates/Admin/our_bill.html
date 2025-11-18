@@ -1,0 +1,53 @@
+{% extends 'base1.html' %} {% block content %}
+<div class="row">
+   <div class="col-sm-12">
+      <div class="card">
+         <div class="card-body">
+            <form action="{% url 'adv_book' %}" method="post" enctype="multipart/form-data">
+               {% csrf_token %}
+               <div class="col-12">
+                  <h5 class="form-title"><span>Advance Booking</span></h5>
+                  {% include 'includes/messages.html' %}
+               </div>
+               <div style="display: flex; flex-wrap: wrap;">
+                  <div class="col-12 col-sm-6">
+                     <div class="form-group">
+                        <label>Customer Name:</label>
+                        <input type="text" class="form-control" name="cust" required>
+                     </div>
+                  </div>
+                  <div class="col-12 col-sm-6">
+                     <div class="form-group">
+                        <label>From:</label>
+                        <input type="text" class="form-control" name="fr" required>
+                     </div>
+                  </div>
+                  <div class="col-12 col-sm-6">
+                     <div class="form-group">
+                        <label>To:</label>
+                        <input type="text" class="form-control" name="to" required>
+                     </div>
+                  </div>
+                  <div class="col-12 col-sm-6">
+                     <div class="form-group">
+                        <label>Date:</label>
+                        <input type="date" class="form-control" name="date" required>
+                     </div>
+                  </div>
+                  <div class="col-12 col-sm-6">
+                     <div class="form-group">
+                        <label>Contact Number:</label>
+                        <input type="number" class="form-control" name="number" required>
+                     </div>
+                  </div>
+                  <div class="col-12">
+                     <button type="submit" class="btn btn-primary">Submit</button>
+                  </div>
+               </div>
+            </form>
+         </div>
+      </div>
+   </div>
+</div>
+
+{% endblock %}

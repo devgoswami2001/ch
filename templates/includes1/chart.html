@@ -1,0 +1,107 @@
+
+<script>
+    'use strict';
+
+$(document).ready(function() {
+
+	// Area chart
+	
+	if ($('#All_details').length > 0) {
+		var options = {
+			series: [ 0, {{comp_resolved}}, {{comp_p}}, {{comp_pending}}],
+			chart: {
+				height: 350,
+				width: '100%',
+				type: 'pie',
+			},
+			labels: ['Total Complaint {{comp_count}}', 'Resolved {{comp_resolved}}', 'InProgress {{comp_p}}', 'Pending {{comp_pending}}'],
+			responsive: [{
+				breakpoint: 480,
+				options: {
+					chart: {
+						width: '100%', // Adjust the width as needed
+						height: 300    // Adjust the height as needed
+					},
+					legend: {
+						position: 'bottom'
+					}
+				}
+			}]
+		};
+	
+		var chart = new ApexCharts(document.querySelector("#All_details"), options);
+		chart.render();
+	}
+	// Bar chart
+	
+	if ($('#stu_gender').length > 0) {
+		var optionsBar = {
+			chart: {
+				type: 'bar',
+				height: 350,
+				width: '100%',
+				toolbar: {
+					show: false
+				},
+			},
+			dataLabels: {
+				enabled: false
+			},
+			plotOptions: {
+				bar: {
+					columnWidth: '45%',
+				}
+			},
+			series: [{
+				name: "Staff",
+				data: [{{ staff_count }}],
+				colors: ['#fdbb38'],
+			}, {
+				name: "Student",
+				data: [{{ student_count }}],
+				colors: ['#19affb'],
+			}],
+			xaxis: {
+				categories: [2023], // You can add more categories if needed
+				labels: {
+					show: true,
+				},
+				axisBorder: {
+					show: false
+				},
+				axisTicks: {
+					show: true
+				},
+			},
+			yaxis: {
+				axisBorder: {
+					show: false
+				},
+				axisTicks: {
+					show: false
+				},
+				labels: {
+					style: {
+						colors: '#777'
+					}
+				}
+			},
+			title: {
+				text: '',
+				align: 'left',
+				style: {
+					fontSize: '18px'
+				}
+			},
+			legend: {
+				position: 'top'
+			}
+		};
+	
+		var chartBar = new ApexCharts(document.querySelector('#stu_gender'), optionsBar);
+		chartBar.render();
+	}
+	
+  
+});
+</script>

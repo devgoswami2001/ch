@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<style>
+    .form-body form {
+        padding: 15px;
+        padding-top: 10px;
+    }
+
+    .cd {
+        display: flex;
+        justify-content: center;
+    }
+    .cdb {
+        text-align: center;
+
+    }
+    .cdb p{
+        margin: 0px;
+        padding: 0px;
+    }
+
+    .log label {
+        font-size: 18px;
+    }
+
+    .log-social {
+        height: 55px;
+        width: 60px;
+    }
+
+    .log-social2 {
+        height: 48px;
+        width: 52px;
+    }
+    .socail-btn{
+        border: none;
+        background-color: white;
+
+    }
+</style>
+<div class="form">
+    <div class="form-body" style="border: 2px solid #b9b4af; width: 335px;">
+        <div class="logoo"> <img class="mor" style="height: 115px; margin-bottom: 20px;"
+                src="{% static '/img/morr.png' %}"></div>
+        {% include 'includes/messages.html' %}
+        <form method="POST" action="{% url 'doLogin' %}" class="log">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label" style="color: #022427; ">Email or Phone number:</label>
+                <input type="email" class="form-control" name="email" style="font-size: 14px;" required>
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label"  style="color: #0c4146;">Password:</label>
+                <input type="password" class="form-control" style="font-size: 14px;" name="password" required>
+            </div>
+            <div class="mb-3 ">
+                <div class="fp">
+                    <a class="fs" href=""
+                        style="color: #024641; text-decoration: underline; font-size: 14px;">Forget
+                        Password</a>
+                    <a class="fs" href=""
+                        style=" color: #096055; text-decoration: underline; font-size: 14px;">Sign
+                        Up</a></label>
+                </div>
+            </div>
+            <div class="mb-3">
+                <div class="cdb">
+                    <p >---------------------- Or ----------------------</p>
+                    <p>Social media login comming soon</p>
+                </div>
+                <div class="cd">
+                    <button class="socail-btn" disabled><img class="log-social" src="{% static '/img/google.JPG' %}" alt=""></button>
+                    <button class="socail-btn" disabled><img class="log-social2" src="{% static '/img/facebook.JPG' %}" alt=""></button>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%; background-color: #03213f; border-color: #8a847e; color: #f1ca43;
+            font-weight: 600;">Submit</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
