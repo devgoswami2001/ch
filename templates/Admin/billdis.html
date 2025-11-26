@@ -288,7 +288,7 @@
                 <tr>
                 <td>Base Fare</td>
                 <td>{{v.km}}</td>
-                <td>Rs. {{v.base_fare}}</td>
+                <td>-</td>
                 <td>Rs. {{v.base_fare}}</td>
             </tr>
             {% if v.apk != '0.00' %}
@@ -321,6 +321,14 @@
                 <td>-</td>
                 <td>Rs. {{v.toll}}</td>
             </tr>
+            {% if v.night != '0' %}
+            <tr>
+                <td>Night Charge</td>
+                <td>-</td>
+                <td>-</td>
+                <td>Rs. {{v.night}}</td>
+            </tr>
+            {% endif %}
             {% if v.igst != '0' %}
             <tr>
                 <td>IGST @ 5.0%</td>
@@ -380,7 +388,7 @@
         </div>
 
         <div class="footer">
-            <p style="font-size: 20px;">Please note:<br>
+            <p style="font-size: 14px;">Please note:<br>
             </br> {{s.terms_and_conditions}}
         </p>
            <div style="display: flex; justify-content: end;">

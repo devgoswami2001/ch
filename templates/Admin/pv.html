@@ -1,7 +1,7 @@
 {% extends 'base1.html' %}
 
 {% block content %}
-<form action="{% url 'billingg' %}" method="post" enctype="multipart/form-data">
+<form action="{% url 'billing' %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <input type="hidden" id="vehicle-count" name="vehicle_count" value="1" />
     <input type="hidden" name="type" value="2" />
@@ -40,6 +40,7 @@
                                 <button type="button" class="btn btn-danger btn-sm delete-vehicle">Delete Vehicle</button>
                             </div>
                             <div style="display:flex; flex-wrap:wrap">
+
                                 <div class="col-12 col-sm-6"><div class="form-group"><label>Vehicle Number:* </label><input type="text" class="form-control" name="vc1" required /></div></div>
                                 <div class="col-12 col-sm-6"><div class="form-group"><label>Driver Name:* </label><input type="text" class="form-control" name="dn1" required /></div></div>
                                 <div class="col-12 col-sm-6"><div class="form-group"><label>Date:* </label><input type="date" class="form-control" name="date1" required /></div></div>
@@ -47,26 +48,27 @@
                                 <div class="col-12 col-sm-6"><div class="form-group"><label>From:* </label><input type="text" class="form-control" name="fr1" required /></div></div>
                                 <div class="col-12 col-sm-6"><div class="form-group"><label>To:* </label><input type="text" class="form-control" name="to1" required /></div></div>
                                 <div class="col-12 col-sm-6"><div class="form-group"><label>Guest:* </label><input type="text" class="form-control" name="guest1" required /></div></div>
-
-                                <!-- KM and Base Fare -->
                                 <div class="col-12 col-sm-6"><div class="form-group"><label>KM:* </label><input type="number" class="form-control" name="km1" id="km1" required /></div></div>
                                 <div class="col-12 col-sm-6"><div class="form-group"><label>Base Fare:* </label><input type="number" class="form-control" name="bf1" id="bf1" required /></div></div>
 
                                 <!-- Toggle Extra -->
-                                <div class="col-12"><button type="button" class="btn btn-warning mb-3 toggle-extra" onclick="toggleExtraFields(this)" data-open="false">Show Extra Charges</button></div>
+                                <div class="col-12">
+                                    <button type="button" class="btn btn-warning mb-3 toggle-extra" onclick="toggleExtraFields(this)" data-open="false">Show Extra Charges</button>
+                                </div>
 
                                 <!-- Extra Fields -->
                                 <div class="extra-fields" style="display:none; flex-wrap: wrap;">
-                                    <div class="col-12 col-sm-6"><div class="form-group"><label>Extra Km:* </label><input type="number" class="form-control" name="Ekm1" id="Ekm1" required /></div></div>
-                                    <div class="col-12 col-sm-6"><div class="form-group"><label>Price Per Km:* </label><input type="number" class="form-control" name="ppk1" id="ppk1"  /></div></div>
-                                    <div class="col-12 col-sm-6"><div class="form-group"><label>Amount Per Km:* </label><input type="number" class="form-control" name="apk1" id="apk1" readonly /></div></div>
-                                    <div class="col-12 col-sm-6"><div class="form-group"><label>Extra Hr:* </label><input type="number" class="form-control" name="Exh1" id="Exh1" required /></div></div>
-                                    <div class="col-12 col-sm-6"><div class="form-group"><label>Price Per Hr:* </label><input type="number" class="form-control" name="pph1" id="pph1" /></div></div>
-                                    <div class="col-12 col-sm-6"><div class="form-group"><label>Amount Per Hr:* </label><input type="number" class="form-control" name="aph1" id="aph1" readonly /></div></div>
-                                    <div class="col-12 col-sm-6"><div class="form-group"><label>Toll:* </label><input type="number" class="form-control" name="toll1" id="toll1"  /></div></div>
+                                    <div class="col-12 col-sm-6"><div class="form-group"><label>Extra Km: </label><input type="number" value="0" class="form-control" name="Ekm1" id="Ekm1" /></div></div>
+                                    <div class="col-12 col-sm-6"><div class="form-group"><label>Price Per Km: </label><input type="number" value="0" class="form-control" name="ppk1" id="ppk1" /></div></div>
+                                    <div class="col-12 col-sm-6"><div class="form-group"><label>Amount Per Km: </label><input type="number" value="0" class="form-control" name="apk1" id="apk1" readonly /></div></div>
+                                    <div class="col-12 col-sm-6"><div class="form-group"><label>Extra Hr: </label><input type="number" value="0" class="form-control" name="Exh1" id="Exh1" /></div></div>
+                                    <div class="col-12 col-sm-6"><div class="form-group"><label>Price Per Hr: </label><input type="number" value="0" class="form-control" name="pph1" id="pph1" /></div></div>
+                                    <div class="col-12 col-sm-6"><div class="form-group"><label>Amount Per Hr: </label><input type="number" value="0" class="form-control" name="aph1" id="aph1" readonly /></div></div>
+                                    <div class="col-12 col-sm-6"><div class="form-group"><label>Toll: </label><input type="number" value="0" class="form-control" name="toll1" id="toll1" /></div></div>
+                                    <div class="col-12 col-sm-6"><div class="form-group"><label>Night Charge: </label><input type="number" value="0" class="form-control" name="night1" id="night1" /></div></div>
                                 </div>
 
-                                <div class="col-12 col-sm-6"><div class="form-group"><label>Total:* </label><input type="number" class="form-control" id="total1" disabled /><input type="hidden" class="form-control" name="total1" id="totall1" /></div></div>
+                                <div class="col-12 col-sm-6"><div class="form-group"><label>Total: </label><input type="number" class="form-control" id="total1" disabled /><input type="hidden" class="form-control" name="total1" id="totall1" /></div></div>
                             </div>
                         </div>
                     </div>
@@ -85,76 +87,109 @@
 <script>
 function toggleExtraFields(btn){
     const ex = btn.closest('.vehicle-info').querySelector('.extra-fields');
-    const open = btn.getAttribute('data-open')==='true';
+    const open = btn.getAttribute('data-open') === 'true';
     ex.style.display = open ? 'none' : 'flex';
     ex.style.flexWrap = 'wrap';
     btn.innerText = open ? 'Show Extra Charges' : 'Hide Extra Charges';
     btn.setAttribute('data-open', !open);
+
+    // Toggle 'required' for visible extra fields only
+    ex.querySelectorAll('input').forEach(input => {
+        if (!open) {
+            input.setAttribute('required', 'required');
+        } else {
+            input.removeAttribute('required');
+        }
+    });
 }
 
-document.addEventListener("DOMContentLoaded",()=>{
-    const container=document.getElementById("vehicle-info-container"),
-          addBtn=document.getElementById("add-vehicle"),
-          vcInput=document.getElementById("vehicle-count"),
-          gTotal=document.getElementById("grand-total"),
-          gTotalHidden=document.getElementById("grand-totall");
-    let count=1;
+document.addEventListener("DOMContentLoaded", () => {
+    const container = document.getElementById("vehicle-info-container"),
+          addBtn = document.getElementById("add-vehicle"),
+          vcInput = document.getElementById("vehicle-count"),
+          gTotal = document.getElementById("grand-total"),
+          gTotalHidden = document.getElementById("grand-totall");
+    let count = 1;
 
     function bindDelete(btn){
-        btn.addEventListener("click",()=>{
+        btn.addEventListener("click",() => {
             btn.closest('.vehicle-info').remove();
             updateGrand();
         });
     }
 
     function bindCalc(id){
-        const bf=document.getElementById(`bf${id}`),
-              toll=document.getElementById(`toll${id}`),
-              ekm=document.getElementById(`Ekm${id}`),
-              ppk=document.getElementById(`ppk${id}`),
-              apk=document.getElementById(`apk${id}`),
-              exh=document.getElementById(`Exh${id}`),
-              pph=document.getElementById(`pph${id}`),
-              aph=document.getElementById(`aph${id}`),
-              total=document.getElementById(`total${id}`),
-              totalH=document.getElementById(`totall${id}`);
+        const bf = document.getElementById(`bf${id}`),
+              toll = document.getElementById(`toll${id}`),
+              ekm = document.getElementById(`Ekm${id}`),
+              ppk = document.getElementById(`ppk${id}`),
+              apk = document.getElementById(`apk${id}`),
+              exh = document.getElementById(`Exh${id}`),
+              pph = document.getElementById(`pph${id}`),
+              aph = document.getElementById(`aph${id}`),
+              night = document.getElementById(`night${id}`),
+              total = document.getElementById(`total${id}`),
+              totalH = document.getElementById(`totall${id}`);
 
         function calc(){
-            const base=parseFloat(bf?.value)||0,
-                  tf=parseFloat(toll?.value)||0,
-                  kmAmt=(parseFloat(ekm?.value)||0)*(parseFloat(ppk?.value)||0),
-                  hrAmt=(parseFloat(exh?.value)||0)*(parseFloat(pph?.value)||0);
-            if(apk) apk.value=kmAmt.toFixed(2);
-            if(aph) aph.value=hrAmt.toFixed(2);
-            const ttl=base+tf+kmAmt+hrAmt;
-            if(total) total.value=ttl.toFixed(2);
-            if(totalH) totalH.value=ttl.toFixed(2);
+            const base = parseFloat(bf?.value) || 0,
+                tf = parseFloat(toll?.value) || 0,
+                kmAmt = (parseFloat(ekm?.value) || 0) * (parseFloat(ppk?.value) || 0),
+                hrAmt = (parseFloat(exh?.value) || 0) * (parseFloat(pph?.value) || 0),
+                nightAmt = parseFloat(night?.value) || 0;
+            if(apk) apk.value = kmAmt.toFixed(2);
+            if(aph) aph.value = hrAmt.toFixed(2);
+            const ttl = base + tf + kmAmt + hrAmt + nightAmt;
+            if(total) total.value = ttl.toFixed(2);
+            if(totalH) totalH.value = ttl.toFixed(2);
             updateGrand();
         }
-        [bf,toll,ekm,ppk,exh,pph].forEach(f=>f?.addEventListener("input",calc));
+        [bf, toll, ekm, ppk, exh, pph, night].forEach(f => f?.addEventListener("input", calc));
         calc();
     }
 
     function updateGrand(){
-        let t=0;
-        document.querySelectorAll("[id^='totall']").forEach(f=>{t+=parseFloat(f.value)||0;});
-        gTotal.value=t.toFixed(2);
-        gTotalHidden.value=t.toFixed(2);
+        let t = 0;
+        document.querySelectorAll("[id^='totall']").forEach(f=>{ t += parseFloat(f.value) || 0; });
+        gTotal.value = t.toFixed(2);
+        gTotalHidden.value = t.toFixed(2);
     }
 
-    addBtn.addEventListener("click",()=>{
+    addBtn.addEventListener("click", () => {
         count++;
-        vcInput.value=count;
-        const first=container.querySelector(".vehicle-info");
-        const clone=first.cloneNode(true);
-        clone.dataset.vehicleId=count;
-        clone.innerHTML=clone.innerHTML.replace(/1/g,count);
-        clone.querySelectorAll("input").forEach(inp=>{if(inp.type!=='hidden') inp.value='';});
-        clone.querySelector('.extra-fields').style.display='none';
-        const tBtn=clone.querySelector('.toggle-extra');
-        tBtn.innerText='Show Extra Charges';
-        tBtn.setAttribute('data-open','false');
+        vcInput.value = count;
+        const first = container.querySelector(".vehicle-info");
+        const clone = first.cloneNode(true);
+
+        // Carefully update all ids and names just at the end digits
+        // Replace '1' at the end ONLY! Not the label/txt.
+        clone.innerHTML = clone.innerHTML
+          .replace(/([_\w-]+)1(["\s>])/g, function(full, prefix, end) {
+                return prefix + count + end;
+          })
+          .replace(/Vehicle Info \d+/, 'Vehicle Info ' + count);
+
+        // Clear all values
+        clone.querySelectorAll("input").forEach(inp => {
+            if (inp.type !== 'hidden' && !inp.readOnly) inp.value = '';
+            if (inp.type === 'number' && inp.readOnly) inp.value = '';
+        });
+
+        // Hide extra fields and remove requireds
+        const extra = clone.querySelector(".extra-fields");
+        if (extra) {
+            extra.style.display = 'none';
+            extra.querySelectorAll('input').forEach(input => input.removeAttribute('required'));
+        }
+        const toggleBtn = clone.querySelector('.toggle-extra');
+        if(toggleBtn) {
+            toggleBtn.innerText = 'Show Extra Charges';
+            toggleBtn.setAttribute('data-open', 'false');
+        }
+
         container.appendChild(clone);
+
+        // Rebind listeners for new vehicle block
         bindCalc(count);
         bindDelete(clone.querySelector('.delete-vehicle'));
     });

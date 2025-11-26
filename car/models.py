@@ -158,6 +158,7 @@ class VehicleDetail(models.Model):
     Exh = models.CharField(max_length=200, default="0")
     pph = models.CharField(max_length=200, default="0")
     aph = models.CharField(max_length=200, default="0")
+    night = models.CharField(max_length=200, default="0")
     d_n = models.CharField(max_length=200)
     way = models.CharField(max_length=200)
     fr = models.CharField(max_length=200)
