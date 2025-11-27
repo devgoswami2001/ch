@@ -211,7 +211,7 @@ def vehcile_mm(request):
 def billing(request):
     if request.method == 'POST':
         try:
-            # Bill-level details
+            # -------- BILL LEVEL DETAILS --------
             type = request.POST.get('type', '')
             cn = request.POST.get('cn', '')
             date = request.POST.get('date', '')
@@ -219,22 +219,20 @@ def billing(request):
             email = request.POST.get('email', 'NA')
             mob = request.POST.get('mob', 'NA')
             payment = request.POST.get('payment', '0')
+
             wallet, cash, online = "0", "0", "0"
-            gt = request.POST.get('gt', 'NA')
+            gt = request.POST.get('gt', '0')
             tc = request.POST.get('tc', 'NA')
 
-            print(f"Bill details: type={type}, cn={cn}, date={date}, add={add}, email={email}, mob={mob}, payment={payment}and {gt}")
-
+            # Payment mode allocation
             if payment == "1":
-                wallet = request.POST.get('gt', '0')  # Grand total from the form
+                wallet = gt
             elif payment == "2":
-                cash = request.POST.get('gt', '0')
+                cash = gt
             elif payment == "3":
-                online = request.POST.get('gt', '0')
+                online = gt
 
-            print(f"Payment method: wallet={wallet}, cash={cash}, online={online}")
-
-            # Create the Bill object
+            # Create Bill
             bill = Bill(
                 type=type,
                 c_n=cn,
@@ -246,23 +244,23 @@ def billing(request):
                 cash=cash,
                 online=online,
                 g_t=gt,
-                terms_and_conditions =tc,
+                terms_and_conditions=tc,
             )
             bill.save()
-            print(f"Bill saved: {bill}")
 
-            # Vehicle details
-            vehicle_count = int(request.POST.get('vehicle_count', 1))  # Get the number of vehicles dynamically
-            print(f"Vehicle count: {vehicle_count}")
+            # -------- VEHICLE DETAILS --------
+            vehicle_count = int(request.POST.get('vehicle_count', 1))
 
             for i in range(1, vehicle_count + 1):
                 v = request.POST.get(f'vc{i}', '')
+                if not v:
+                    continue  # skip empty rows
+
                 base_fare = request.POST.get(f'bf{i}', '0')
                 dis = request.POST.get(f'dis{i}', '0')
-                date = request.POST.get(f'date{i}', '0')
                 toll = request.POST.get(f'toll{i}', '0')
-                km = request.POST.get(f'km{i}', '0')
                 igst = request.POST.get(f'igst{i}', '0')
+                km = request.POST.get(f'km{i}', '0')
                 dn = request.POST.get(f'dn{i}', '')
                 way = request.POST.get(f'way{i}', '')
                 fr = request.POST.get(f'fr{i}', '')
@@ -274,40 +272,39 @@ def billing(request):
                 Exh = request.POST.get(f'Exh{i}', '0')
                 pph = request.POST.get(f'pph{i}', '0')
                 aph = request.POST.get(f'aph{i}', '0')
+                night = request.POST.get(f'night{i}', '0')  # <<< ADDED
                 total = request.POST.get(f'total{i}', '0')
+                v_date = request.POST.get(f'date{i}', '')
 
-                # Print details for each vehicle
-                print(f"Vehicle {i} details: v={v}, base_fare={base_fare}, dis={dis}, toll={toll}, igst={igst}, dn={dn}, way={way}, fr={fr}, to={to}, guest={guest}, total={total}")
-
-                if v:  # Only add valid vehicles
-                    VehicleDetail.objects.create(
-                        bill=bill,
-                        v=v,
-                        base_fare=base_fare,
-                        dis=dis,
-                        toll=toll,
-                        igst=igst,
-                        d_n=dn,
-                        km=km,
-                        date = date,
-                        way=way,
-                        fr=fr,
-                        to=to,
-                        guest=guest,
-                        Ekm=Ekm,
-                        ppk=ppk,
-                        apk=apk,
-                        Exh=Exh,
-                        pph=pph,
-                        aph=aph,
-                        total=total
-                    )
-                    print(f"Vehicle {i} saved successfully")
+                VehicleDetail.objects.create(
+                    bill=bill,
+                    v=v,
+                    base_fare=base_fare,
+                    dis=dis,
+                    toll=toll,
+                    igst=igst,
+                    date=v_date,
+                    km=km,
+                    Ekm=Ekm,
+                    ppk=ppk,
+                    apk=apk,
+                    Exh=Exh,
+                    pph=pph,
+                    aph=aph,
+                    night=night,
+                    d_n=dn,
+                    way=way,
+                    fr=fr,
+                    to=to,
+                    guest=guest,
+                    total=total
+                )
 
             messages.success(request, "Bill generated successfully")
+
         except Exception as e:
             messages.error(request, f"An error occurred: {e}")
-            print(f"Error: {e}")
+            print(f"Error in billing: {e}")
 
         return redirect('billing')
 
@@ -320,7 +317,7 @@ def billing(request):
 def billingg(request):
     if request.method == 'POST':
         try:
-            # Bill-level details
+            # -------- BILL LEVEL DETAILS --------
             type = request.POST.get('type', '')
             cn = request.POST.get('cn', '')
             date = request.POST.get('date', '')
@@ -328,21 +325,19 @@ def billingg(request):
             email = request.POST.get('email', 'NA')
             mob = request.POST.get('mob', 'NA')
             payment = request.POST.get('payment', '0')
+
             wallet, cash, online = "0", "0", "0"
-            gt = request.POST.get('gt', 'NA')
-            
-            print(f"Bill details: type={type}, cn={cn}, date={date}, add={add}, email={email}, mob={mob}, payment={payment}")
+            gt = request.POST.get('gt', '0')
 
+            # Payment mode allocation
             if payment == "1":
-                wallet = request.POST.get('gt', '0')  # Grand total from the form
+                wallet = gt
             elif payment == "2":
-                cash = request.POST.get('gt', '0')
+                cash = gt
             elif payment == "3":
-                online = request.POST.get('gt', '0')
+                online = gt
 
-            print(f"Payment method: wallet={wallet}, cash={cash}, online={online}")
-
-            # Create the Bill object
+            # Create Bill
             bill = Bill(
                 type=type,
                 c_n=cn,
@@ -356,20 +351,20 @@ def billingg(request):
                 g_t=gt,
             )
             bill.save()
-            print(f"Bill saved: {bill}")
 
-            # Vehicle details
-            vehicle_count = int(request.POST.get('vehicle_count', 1))  # Get the number of vehicles dynamically
-            print(f"Vehicle count: {vehicle_count}")
+            # -------- VEHICLE DETAILS --------
+            vehicle_count = int(request.POST.get('vehicle_count', 1))
 
             for i in range(1, vehicle_count + 1):
                 v = request.POST.get(f'vc{i}', '')
+                if not v:
+                    continue
+
                 base_fare = request.POST.get(f'bf{i}', '0')
                 dis = request.POST.get(f'dis{i}', '0')
-                date = request.POST.get(f'date{i}', '0')
-                km = request.POST.get(f'km{i}', '0')
                 toll = request.POST.get(f'toll{i}', '0')
                 igst = request.POST.get(f'igst{i}', '0')
+                km = request.POST.get(f'km{i}', '0')
                 dn = request.POST.get(f'dn{i}', '')
                 way = request.POST.get(f'way{i}', '')
                 fr = request.POST.get(f'fr{i}', '')
@@ -381,45 +376,43 @@ def billingg(request):
                 Exh = request.POST.get(f'Exh{i}', '0')
                 pph = request.POST.get(f'pph{i}', '0')
                 aph = request.POST.get(f'aph{i}', '0')
+                night = request.POST.get(f'night{i}', '0')  # <<< ADDED
                 total = request.POST.get(f'total{i}', '0')
+                v_date = request.POST.get(f'date{i}', '')
 
-                # Print details for each vehicle
-                print(f"Vehicle {i} details: v={v}, base_fare={base_fare}, dis={dis}, toll={toll}, igst={igst}, dn={dn}, way={way}, fr={fr}, to={to}, guest={guest}, total={total}")
-
-                if v:  # Only add valid vehicles
-                    VehicleDetail.objects.create(
-                        bill=bill,
-                        v=v,
-                        base_fare=base_fare,
-                        dis=dis,
-                        toll=toll,
-                        igst=igst,
-                        d_n=dn,
-                        date = date,
-                        way=way,
-                        fr=fr,
-                        to=to,
-                        km=km,
-                        guest=guest,
-                        Ekm=Ekm,
-                        ppk=ppk,
-                        apk=apk,
-                        Exh=Exh,
-                        pph=pph,
-                        aph=aph,
-                        total=total
-                    )
-                    print(f"Vehicle {i} saved successfully")
+                VehicleDetail.objects.create(
+                    bill=bill,
+                    v=v,
+                    base_fare=base_fare,
+                    dis=dis,
+                    toll=toll,
+                    igst=igst,
+                    date=v_date,
+                    km=km,
+                    Ekm=Ekm,
+                    ppk=ppk,
+                    apk=apk,
+                    Exh=Exh,
+                    pph=pph,
+                    aph=aph,
+                    night=night,
+                    d_n=dn,
+                    way=way,
+                    fr=fr,
+                    to=to,
+                    guest=guest,
+                    total=total
+                )
 
             messages.success(request, "Bill generated successfully")
+
         except Exception as e:
             messages.error(request, f"An error occurred: {e}")
-            print(f"Error: {e}")
+            print(f"Error in billingg: {e}")
 
         return redirect('billingg')
 
-    return render(request, 'Admin/pv.html')# view_vehicle.html
-
+    return render(request, 'Admin/pv.html')
 
 
 

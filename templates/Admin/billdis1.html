@@ -302,7 +302,7 @@
             <tr>
                 <td>Extra Hr.</td>
                 <td>{{v.Exh}}</td>
-                <td>Rs. {{v.pph}}</td>
+                <td>-</td>
                 <td>Rs. {{v.aph}}</td>
             </tr>
             {% endif %}
@@ -320,6 +320,14 @@
                 <td>-</td>
                 <td>Rs. {{v.toll}}</td>
             </tr>
+            {% if v.night != '0' %}
+            <tr>
+                <td>Night Charge</td>
+                <td>-</td>
+                <td>-</td>
+                <td>Rs. {{v.night}}</td>
+            </tr>
+            {% endif %}
             {% if v.igst != '0' %}
             <tr>
                 <td>IGST @ 5.0%</td>
@@ -379,7 +387,7 @@
     </div>
 
     <div class="footer">
-        <p style="font-size: 20px;">Please note:
+        <p style="font-size: 14px;">Please note:
             </br> {{s.terms_and_conditions}}
         </p>
         <div style="display: flex; justify-content: end;">
