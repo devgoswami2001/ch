@@ -1,0 +1,117 @@
+
+        /* Styles for the guest count selection */
+        .select-optionn {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+
+        }
+
+        .guest-select {
+            display: flex;
+            align-items: center;
+        }
+
+        .button {
+            background: #007BFF;
+            color: #fff;
+            border: none;
+            width: 35px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-align: center;
+        }
+
+        .button:hover {
+            background: #c3d8ee;
+        }
+
+        #guest-count {
+            margin-left: 10px;
+            margin-right: 10px;
+            margin-top: 2px;
+        }
+
+        #room-count {
+            margin-left: 10px;
+            margin-right: 10px;
+            margin-top: 2px;
+        }
+        
+
+        /* Style for the hidden input field */
+        #guest {
+            display: none;
+        }
+
+        .sp {
+            font: bold;
+            font-size: 15px;
+        }
+
+        .about-pic {
+            height: 100%;
+        }
+
+        .row {
+            height: 100%;
+        }
+
+        .tikalogo {
+            height: 60px;
+        }
+
+        .service-item {
+            height: 100%;
+        }
+
+        .section-title span {
+            font-size: 14px;
+            color: #1f20f8;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .blog-item .bi-text .b-tag {
+            background: #5e4ce2;
+        }
+
+        .d-img {
+            height: 100%;
+        }
+
+        .about-img {
+            height: 100%;
+        }
+
+        @media screen and (max-width: 580px) {
+            .d-img {
+                height: 50%;
+            }
+        }
+        
+        /* Add this in your CSS file */
+@keyframes slideInFromRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Apply this class initially to the divs you want to animate */
+.slide-in {
+    animation: 1s ease-out 0s 1 slideInFromRight;
+    animation-fill-mode: forwards; /* Keep the element in the final state after the animation */
+    visibility: hidden; /* Make the div invisible until the animation starts */
+}
+
+/* Make sure the animation doesn't start until the element is in view */
+.visible .slide-in {
+    visibility: visible;
+}

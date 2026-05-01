@@ -1,0 +1,89 @@
+@media (max-width: 968px) {
+  .logo img {
+    width: 160px;
+    height: 81px;
+  }
+  }
+
+
+.canvas-open {
+  display: none;
+}
+
+@media only screen and (max-width: 991px) {
+  .offcanvas-menu-overlay.active {
+    visibility: visible;
+  }
+
+  .canvas-open {
+    position: absolute;
+    right: 42px;
+    top: 25px;
+    font-size: 48px;
+    width: 56px;
+    height: 45px;
+    color: #209fae;
+    border: 1px solid #4da8b2;
+    border-radius: 14px;
+    line-height: 33px;
+    text-align: center;
+    z-index: 100;
+    display: block;
+    cursor: pointer;
+  }
+
+}
+
+.form {
+  display: flex;
+  justify-content: center;
+  min-height: 600px;
+}
+
+.form-body {
+  width: 400px;
+  border: 2px solid #5ab3bf;
+  /* min-height: 550px; */
+  margin: 30px;
+  border-radius: 25px;
+}
+
+.form-body form {
+  padding: 30px;
+  padding-top: 10px;
+}
+
+.mor {
+  padding-top: 10px;
+  /* padding-left: 84px; */
+  height: 150px;
+}
+
+div .logi {
+  font-size: 45px;
+  font-weight: 550;
+  color: #1bb4c1;
+  /* padding-left: 105px; */
+  padding-bottom: 10px;
+}
+
+.log label {
+  font-size: 21px;
+  color: #057e88;
+}
+
+.logoo {
+  display: flex;
+  justify-content: center;
+}
+
+.fp{
+  display: flex;
+  justify-content: space-between;
+  color: #1bb4c1;
+}
+
+.fs:hover{
+  color: #057e88;
+  text-decoration: underline;
+}

@@ -25,8 +25,11 @@ SECRET_KEY = 'django-insecure-tua8p1nwqi*hx(3qs*^il(=v1g7!&(6a@v8ahzo#27k(ez$daf
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*', '13.15.161.193', 'chaudharytoursandtravels.in', 'www.chaudharytoursandtravels.in']
-
+#ALLOWED_HOSTS = ['*', '13.127.247.205', 'chaudharytoursandtravels.in', 'www.chaudharytoursandtravels.in']
+ALLOWED_HOSTS = [
+    'chaudharytoursandtravels.in',
+    'www.chaudharytoursandtravels.in',
+]
 
 # Application definition
 
@@ -124,12 +127,29 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
+STATIC_URL = '/static/'
 
-STATIC_URL = 'static/'
-STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
+]
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+#STATIC_URL = 'static/'
+#STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'car.CustomUser'
+
+
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://chaudharytoursandtravels.in',
+    'https://www.chaudharytoursandtravels.in',
+]
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
