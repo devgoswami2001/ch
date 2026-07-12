@@ -27,10 +27,8 @@ DEBUG = True
 
 #ALLOWED_HOSTS = ['*', '13.127.247.205', 'chaudharytoursandtravels.in', 'www.chaudharytoursandtravels.in']
 ALLOWED_HOSTS = [
-    'chaudharytoursandtravels.in',
-    'www.chaudharytoursandtravels.in',
+    '*'
 ]
-
 # Application definition
 
 INSTALLED_APPS = [
